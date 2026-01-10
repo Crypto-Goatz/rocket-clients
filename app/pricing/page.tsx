@@ -1,7 +1,7 @@
 // ============================================================
-// RocketClients - BUILD YOUR OWN CRM - Pricing Revolution
+// RocketClients - BUILD YOUR OWN CRM - Final Pricing
 // ============================================================
-// Only pay for what you need. Mix and match. Change anytime.
+// Base included free. Pay only for what you need. Change anytime.
 // ============================================================
 
 'use client'
@@ -13,15 +13,11 @@ import {
   Check,
   X,
   ArrowRight,
-  ArrowDown,
   Star,
   Sparkles,
   Zap,
   Users,
   MessageSquare,
-  BarChart3,
-  Shield,
-  Headphones,
   Mail,
   Calendar,
   Globe,
@@ -31,63 +27,61 @@ import {
   Workflow,
   Bot,
   CreditCard,
-  Megaphone,
   Target,
   PieChart,
-  Smartphone,
-  Video,
   Palette,
   ShoppingCart,
   BookOpen,
-  HeadphonesIcon,
-  Wrench,
-  Plus,
-  Minus,
   RefreshCw,
   Shuffle,
   Gift,
   Tag,
   Percent,
-  ChevronDown
+  ChevronDown,
+  BarChart3,
+  FolderOpen,
+  CheckSquare,
+  Image,
+  Package
 } from 'lucide-react'
 
 // ============================================================
-// BUILD YOUR OWN - 20 Individual Features (PRIMARY)
+// BASE FEATURES (Included FREE with any purchase)
 // ============================================================
-const individualFeatures = [
-  // Marketing
-  { id: 'social-media', name: 'Social Media Manager', description: 'Schedule posts, manage accounts, track engagement across all platforms', price: 45, icon: Instagram, category: 'Marketing' },
-  { id: 'email-marketing', name: 'Email Marketing', description: 'Campaigns, templates, automation, analytics, and deliverability tools', price: 40, icon: Mail, category: 'Marketing' },
-  { id: 'sms-marketing', name: 'SMS & Text Marketing', description: 'Two-way texting, bulk SMS, templates, and compliance tools', price: 50, icon: Phone, category: 'Marketing' },
-  { id: 'reputation', name: 'Reputation Management', description: 'Review requests, monitoring, Google & Facebook review management', price: 35, icon: Star, category: 'Marketing' },
-  // CRM
-  { id: 'crm-contacts', name: 'CRM & Contacts', description: 'Contact management, tags, segments, custom fields, and activity tracking', price: 35, icon: Users, category: 'CRM' },
-  { id: 'unified-inbox', name: 'Unified Inbox', description: 'All conversations in one place - SMS, email, FB, IG, WhatsApp', price: 40, icon: MessageSquare, category: 'CRM' },
-  { id: 'pipeline', name: 'Sales Pipeline', description: 'Visual pipelines, deal tracking, opportunity management', price: 45, icon: Target, category: 'CRM' },
-  // Scheduling
-  { id: 'calendar', name: 'Calendar & Booking', description: 'Online scheduling, calendar sync, automated reminders', price: 30, icon: Calendar, category: 'Scheduling' },
-  // Websites
-  { id: 'funnels', name: 'Funnels & Landing Pages', description: 'Drag-and-drop builder, templates, A/B testing, analytics', price: 55, icon: Globe, category: 'Websites' },
-  { id: 'websites', name: 'Full Website Builder', description: 'Complete websites with blog, SEO tools, custom domains', price: 60, icon: Palette, category: 'Websites' },
-  { id: 'forms-surveys', name: 'Forms & Surveys', description: 'Custom forms, surveys, quizzes with conditional logic', price: 25, icon: FileText, category: 'Websites' },
-  // Automation
-  { id: 'workflows', name: 'Workflow Automation', description: 'Visual workflow builder, triggers, conditions, multi-step campaigns', price: 65, icon: Workflow, category: 'Automation' },
-  { id: 'triggers', name: 'Smart Triggers', description: 'Event-based automation, webhooks, third-party integrations', price: 40, icon: Zap, category: 'Automation' },
-  // Commerce
-  { id: 'payments', name: 'Payments & Invoicing', description: 'Accept payments, subscriptions, invoices, payment plans', price: 45, icon: CreditCard, category: 'Commerce' },
-  { id: 'ecommerce', name: 'E-commerce & Products', description: 'Product catalog, order management, shopping cart', price: 50, icon: ShoppingCart, category: 'Commerce' },
-  // Content
-  { id: 'membership', name: 'Membership & Courses', description: 'Create courses, membership areas, drip content, certificates', price: 55, icon: BookOpen, category: 'Content' },
-  { id: 'communities', name: 'Communities', description: 'Build community spaces, discussions, member engagement', price: 40, icon: Users, category: 'Content' },
-  // Analytics
-  { id: 'analytics', name: 'Advanced Analytics', description: 'Dashboards, reports, attribution, conversion tracking', price: 35, icon: PieChart, category: 'Analytics' },
-  { id: 'call-tracking', name: 'Call Tracking', description: 'Track calls, recordings, analytics, lead attribution', price: 45, icon: Phone, category: 'Analytics' },
-  // AI
-  { id: 'rocket-ai', name: 'Rocket+ AI Mods', description: 'Full suite: RocketFlow, Content AI, APEX AI, Course Generator & more', price: 99, icon: Bot, category: 'AI', highlight: true },
+const baseFeatures = [
+  { name: 'Contacts & CRM', description: 'Contact management, tags, segments, custom fields', icon: Users, value: 35 },
+  { name: 'Media Library', description: 'File storage, images, documents, assets', icon: Image, value: 15 },
+  { name: 'Forms', description: 'Lead capture forms, submissions, notifications', icon: FileText, value: 25 },
+  { name: 'Tasks', description: 'Task management, assignments, due dates', icon: CheckSquare, value: 15 },
+  { name: 'Calendar & Booking', description: 'Online scheduling, appointments, reminders', icon: Calendar, value: 30 },
+  { name: 'Reporting & Dashboard', description: 'Analytics, stats, performance tracking', icon: BarChart3, value: 35 },
+]
+
+const baseValue = baseFeatures.reduce((sum, f) => sum + f.value, 0) // $155 value
+
+// ============================================================
+// PAID FEATURES (Add what you need)
+// ============================================================
+const paidFeatures = [
+  { id: 'funnels', name: 'Funnels & Landing Pages', description: 'Drag-and-drop builder, templates, A/B testing', price: 55, icon: Globe, category: 'Websites' },
+  { id: 'email-marketing', name: 'Email Marketing', description: 'Campaigns, templates, sequences, analytics', price: 40, icon: Mail, category: 'Marketing' },
+  { id: 'sms-marketing', name: 'SMS & Text Marketing', description: 'Two-way texting, bulk SMS, compliance tools', price: 50, icon: Phone, category: 'Marketing' },
+  { id: 'unified-inbox', name: 'Unified Inbox', description: 'All conversations in one place - SMS, email, FB, IG', price: 40, icon: MessageSquare, category: 'CRM' },
+  { id: 'social-media', name: 'Social Media Manager', description: 'Schedule posts, manage accounts, track engagement', price: 45, icon: Instagram, category: 'Marketing' },
+  { id: 'reputation', name: 'Reputation Management', description: 'Review requests, monitoring, Google & Facebook', price: 35, icon: Star, category: 'Marketing' },
+  { id: 'pipeline', name: 'Sales Pipeline', description: 'Visual pipelines, deal tracking, opportunities', price: 45, icon: Target, category: 'CRM' },
+  { id: 'workflows', name: 'Workflow Automation', description: 'Visual builder, triggers, multi-step campaigns', price: 65, icon: Workflow, category: 'Automation' },
+  { id: 'triggers', name: 'Smart Triggers', description: 'Event-based automation, webhooks, integrations', price: 40, icon: Zap, category: 'Automation' },
+  { id: 'payments', name: 'Payments & Invoicing', description: 'Accept payments, subscriptions, payment plans', price: 45, icon: CreditCard, category: 'Commerce' },
+  { id: 'ecommerce', name: 'E-commerce & Products', description: 'Product catalog, order management, cart', price: 50, icon: ShoppingCart, category: 'Commerce' },
+  { id: 'membership', name: 'Membership & Courses', description: 'Course builder, membership areas, drip content', price: 55, icon: BookOpen, category: 'Content' },
+  { id: 'communities', name: 'Communities', description: 'Build community spaces, discussions, engagement', price: 40, icon: Users, category: 'Content' },
+  { id: 'call-tracking', name: 'Call Tracking', description: 'Track calls, recordings, analytics, attribution', price: 45, icon: Phone, category: 'Analytics' },
+  { id: 'rocket-ai', name: 'Rocket+ AI Mods', description: 'Full AI suite: RocketFlow, Content AI, APEX & more', price: 99, icon: Bot, category: 'AI', highlight: true },
 ]
 
 // ============================================================
-// BUNDLE PLANS (Secondary - for those who want everything)
+// BUNDLE PLANS (For those who want it all)
 // ============================================================
 const bundlePlans = [
   {
@@ -98,76 +92,67 @@ const bundlePlans = [
     trial: 7,
     stripeMonthly: 'https://buy.stripe.com/5kQbJ0djObObb4E6162wU0a',
     stripeAnnual: 'https://buy.stripe.com/5kQbJ0djObObb4E6162wU0a',
-    includes: ['CRM & Contacts', 'Email Marketing', 'SMS Marketing', 'Calendar', 'Landing Pages', 'Basic Automations', 'Unified Inbox'],
+    includes: ['Base Features', 'Funnels', 'Email', 'SMS', 'Inbox', 'Pipeline'],
+    featureCount: 5,
   },
   {
     name: 'Growth Bundle',
     description: 'Everything you need to scale',
     price: 425,
-    annual: 4225,
+    annual: 4250,
     trial: 0,
     stripeMonthly: 'https://buy.stripe.com/6oU6oG3JecSf5Kk4X22wU0e',
     stripeAnnual: 'https://buy.stripe.com/9B65kCbbG3hF6Oodty2wU0g',
-    includes: ['Everything in Starter', 'Funnels & Websites', 'Advanced Automations', 'Membership & Courses', 'Reputation Management', 'Social Media', 'Payments', 'Rocket+ AI Mods'],
+    includes: ['Everything in Starter', 'Workflows', 'Social Media', 'Reputation', 'Payments', 'Rocket+ AI'],
+    featureCount: 10,
     popular: true,
   },
   {
     name: 'Scale Bundle',
     description: 'Enterprise-grade for agencies',
     price: 925,
-    annual: 9500,
+    annual: 9250,
     trial: 14,
     stripeMonthly: 'https://buy.stripe.com/7sY6oG3Je19x3Cccpu2wU0i',
     stripeAnnual: 'https://buy.stripe.com/3cI5kC0x2f0nfkU2OU2wU0j',
-    includes: ['Everything in Growth', 'Unlimited Sub-accounts', 'White-label Platform', 'API Access', 'Dedicated Success Manager', 'All Rocket+ AI Mods', 'Phone Support'],
+    includes: ['All 15 Features', 'White-label Platform', 'Unlimited Sub-accounts', 'API Access', 'Priority Support'],
+    featureCount: 15,
   }
 ]
 
-const categories = ['All', 'Marketing', 'CRM', 'Scheduling', 'Websites', 'Automation', 'Commerce', 'Content', 'Analytics', 'AI']
+const categories = ['All', 'Marketing', 'CRM', 'Websites', 'Automation', 'Commerce', 'Content', 'Analytics', 'AI']
 
 export default function PricingPage() {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([])
   const [activeCategory, setActiveCategory] = useState('All')
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
   const [promoCode, setPromoCode] = useState('')
-  const [promoApplied, setPromoApplied] = useState(false)
 
   const toggleFeature = (id: string) => {
     setSelectedFeatures(prev =>
-      prev.includes(id)
-        ? prev.filter(f => f !== id)
-        : [...prev, id]
+      prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
     )
   }
 
-  const selectAll = () => {
-    setSelectedFeatures(individualFeatures.map(f => f.id))
-  }
-
-  const clearAll = () => {
-    setSelectedFeatures([])
-  }
+  const selectAll = () => setSelectedFeatures(paidFeatures.map(f => f.id))
+  const clearAll = () => setSelectedFeatures([])
 
   const filteredFeatures = useMemo(() => {
-    if (activeCategory === 'All') return individualFeatures
-    return individualFeatures.filter(f => f.category === activeCategory)
+    if (activeCategory === 'All') return paidFeatures
+    return paidFeatures.filter(f => f.category === activeCategory)
   }, [activeCategory])
 
   const customTotal = useMemo(() => {
     const base = selectedFeatures.reduce((total, id) => {
-      const feature = individualFeatures.find(f => f.id === id)
+      const feature = paidFeatures.find(f => f.id === id)
       return total + (feature?.price || 0)
     }, 0)
-    // Apply 15% discount for annual
-    if (billingCycle === 'annual') {
-      return Math.round(base * 0.85)
-    }
-    return base
+    return billingCycle === 'annual' ? Math.round(base * 0.85) : base
   }, [selectedFeatures, billingCycle])
 
   const monthlyEquivalent = useMemo(() => {
     return selectedFeatures.reduce((total, id) => {
-      const feature = individualFeatures.find(f => f.id === id)
+      const feature = paidFeatures.find(f => f.id === id)
       return total + (feature?.price || 0)
     }, 0)
   }, [selectedFeatures])
@@ -198,7 +183,7 @@ export default function PricingPage() {
         </div>
       </nav>
 
-      {/* HERO - Build Your Own is THE focus */}
+      {/* HERO */}
       <section className="pt-16 pb-8 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5" />
         <div className="mx-auto max-w-5xl px-4 relative">
@@ -215,17 +200,17 @@ export default function PricingPage() {
           </h1>
 
           <p className="mt-6 text-xl text-zinc-400 max-w-2xl mx-auto">
-            Stop paying for features you don't use. Select exactly what you need,
-            pay only for what you want, and change it anytime.
+            Start with a powerful base. Add only what you need.
+            Pay for what you use. Change anytime.
           </p>
 
           {/* Value Props */}
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             {[
+              { icon: Package, text: '$155 Base Free', color: 'text-green-400' },
               { icon: Shuffle, text: 'Mix & Match', color: 'text-cyan-400' },
-              { icon: RefreshCw, text: 'Change Anytime', color: 'text-green-400' },
-              { icon: Tag, text: 'No Contracts', color: 'text-orange-400' },
-              { icon: Percent, text: 'Monthly Specials', color: 'text-pink-400' },
+              { icon: RefreshCw, text: 'Change Anytime', color: 'text-orange-400' },
+              { icon: Tag, text: 'No Contracts', color: 'text-pink-400' },
             ].map((prop) => (
               <div key={prop.text} className="flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-800/50 px-5 py-2">
                 <prop.icon className={`h-4 w-4 ${prop.color}`} />
@@ -254,7 +239,6 @@ export default function PricingPage() {
             </button>
           </div>
 
-          {/* Scroll indicator */}
           <div className="mt-10">
             <a href="#builder" className="inline-flex flex-col items-center text-zinc-500 hover:text-cyan-400 transition-colors">
               <span className="text-sm">Start Building</span>
@@ -264,26 +248,47 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* BUILD YOUR OWN - Main Feature Selector */}
+      {/* BASE FEATURES - What's Included Free */}
+      <section className="py-12 border-t border-zinc-800">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 rounded-full border border-green-500/50 bg-green-500/10 px-4 py-2 mb-4">
+              <Check className="h-4 w-4 text-green-400" />
+              <span className="text-sm font-medium text-green-400">Included FREE with any plan</span>
+            </div>
+            <h2 className="text-3xl font-bold text-white">Your Base Platform</h2>
+            <p className="mt-2 text-zinc-400">${baseValue} value included at no extra cost</p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
+            {baseFeatures.map((feature) => (
+              <div key={feature.name} className="flex items-start gap-4 rounded-xl border border-green-500/20 bg-green-500/5 p-4">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-green-500/20">
+                  <feature.icon className="h-5 w-5 text-green-400" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white">{feature.name}</h3>
+                  <p className="text-sm text-zinc-400">{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BUILD YOUR OWN - Feature Selector */}
       <section id="builder" className="py-16 scroll-mt-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
             <div>
-              <h2 className="text-3xl font-bold text-white">Select Your Features</h2>
-              <p className="mt-2 text-zinc-400">Click to add or remove. Your plan updates in real-time.</p>
+              <h2 className="text-3xl font-bold text-white">Add Your Features</h2>
+              <p className="mt-2 text-zinc-400">Click to add. Pay only for what you select.</p>
             </div>
             <div className="flex items-center gap-3">
-              <button
-                onClick={selectAll}
-                className="px-4 py-2 rounded-lg border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 transition-all"
-              >
+              <button onClick={selectAll} className="px-4 py-2 rounded-lg border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 transition-all">
                 Select All
               </button>
-              <button
-                onClick={clearAll}
-                className="px-4 py-2 rounded-lg border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 transition-all"
-              >
+              <button onClick={clearAll} className="px-4 py-2 rounded-lg border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 transition-all">
                 Clear All
               </button>
             </div>
@@ -307,10 +312,11 @@ export default function PricingPage() {
           </div>
 
           {/* Feature Grid */}
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredFeatures.map((feature) => {
               const isSelected = selectedFeatures.includes(feature.id)
               const IconComponent = feature.icon
+              const displayPrice = billingCycle === 'annual' ? Math.round(feature.price * 0.85) : feature.price
               return (
                 <button
                   key={feature.id}
@@ -342,13 +348,19 @@ export default function PricingPage() {
                   <h3 className="mt-4 font-semibold text-white">{feature.name}</h3>
                   <p className="mt-1 text-sm text-zinc-400 line-clamp-2">{feature.description}</p>
                   <div className="mt-4 flex items-center justify-between">
-                    <span className={`text-xl font-bold ${
-                      isSelected
-                        ? feature.highlight ? 'text-orange-400' : 'text-cyan-400'
-                        : 'text-zinc-300'
-                    }`}>
-                      ${feature.price}<span className="text-sm font-normal text-zinc-500">/mo</span>
-                    </span>
+                    <div>
+                      <span className={`text-xl font-bold ${
+                        isSelected
+                          ? feature.highlight ? 'text-orange-400' : 'text-cyan-400'
+                          : 'text-zinc-300'
+                      }`}>
+                        ${displayPrice}
+                      </span>
+                      <span className="text-sm text-zinc-500">/mo</span>
+                      {billingCycle === 'annual' && (
+                        <span className="ml-2 text-xs text-green-400 line-through">${feature.price}</span>
+                      )}
+                    </div>
                     <span className={`text-xs px-2 py-1 rounded-full ${
                       isSelected ? 'bg-zinc-800 text-zinc-300' : 'bg-zinc-800/50 text-zinc-500'
                     }`}>
@@ -366,9 +378,12 @@ export default function PricingPage() {
               <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
                 <div className="flex-1">
                   <div className="flex items-center gap-4 flex-wrap">
-                    <p className="text-zinc-400">
-                      <span className="text-2xl font-bold text-white">{selectedFeatures.length}</span> features
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-green-400 bg-green-500/10 px-2 py-1 rounded">Base included</span>
+                      <span className="text-zinc-500">+</span>
+                      <span className="text-2xl font-bold text-white">{selectedFeatures.length}</span>
+                      <span className="text-zinc-400">features</span>
+                    </div>
                     <div className="h-6 w-px bg-zinc-700" />
                     <div>
                       <span className="text-4xl font-bold text-white">${customTotal}</span>
@@ -382,13 +397,12 @@ export default function PricingPage() {
                   </div>
                   {selectedFeatures.length > 0 && (
                     <p className="mt-2 text-sm text-zinc-500">
-                      {selectedFeatures.slice(0, 3).map(id => individualFeatures.find(f => f.id === id)?.name).join(', ')}
+                      {selectedFeatures.slice(0, 3).map(id => paidFeatures.find(f => f.id === id)?.name).join(', ')}
                       {selectedFeatures.length > 3 && ` +${selectedFeatures.length - 3} more`}
                     </p>
                   )}
                 </div>
 
-                {/* Promo Code */}
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <input
@@ -413,148 +427,129 @@ export default function PricingPage() {
             </div>
           </div>
 
-          {/* Empty state helper */}
+          {/* Empty state */}
           {selectedFeatures.length === 0 && (
             <div className="mt-8 text-center">
               <p className="text-zinc-500">
-                Click any feature above to start building your perfect CRM.
-                <span className="text-cyan-400 ml-2">Start with just one feature for ${Math.min(...individualFeatures.map(f => f.price))}/mo!</span>
+                Select features above to build your plan.
+                <span className="text-cyan-400 ml-2">Starting at just ${Math.min(...paidFeatures.map(f => f.price))}/mo!</span>
               </p>
             </div>
           )}
         </div>
       </section>
 
-      {/* Quick Start Suggestions */}
+      {/* Quick Start Combos */}
       <section className="py-16 border-t border-zinc-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-white text-center mb-4">Popular Combinations</h3>
-          <p className="text-zinc-400 text-center mb-10">Quick-start templates you can customize</p>
+          <p className="text-zinc-400 text-center mb-10">Click to auto-select these features</p>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-4">
             {[
-              {
-                name: 'Social Media Only',
-                price: 45,
-                features: ['social-media'],
-                description: 'Just need social? Get it for $45/mo',
-                color: 'from-pink-500 to-rose-500'
-              },
-              {
-                name: 'Email + CRM Basics',
-                price: 115,
-                features: ['email-marketing', 'crm-contacts', 'unified-inbox'],
-                description: 'Perfect for email marketers',
-                color: 'from-cyan-500 to-blue-500'
-              },
-              {
-                name: 'Sales Machine',
-                price: 155,
-                features: ['crm-contacts', 'pipeline', 'calendar', 'payments'],
-                description: 'Close more deals',
-                color: 'from-green-500 to-emerald-500'
-              },
-            ].map((combo) => (
-              <button
-                key={combo.name}
-                onClick={() => setSelectedFeatures(combo.features)}
-                className="group rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-left hover:border-zinc-700 transition-all"
-              >
-                <div className={`inline-flex items-center gap-2 rounded-full bg-gradient-to-r ${combo.color} px-3 py-1 mb-4`}>
-                  <Sparkles className="h-3 w-3 text-white" />
-                  <span className="text-xs font-medium text-white">Quick Start</span>
-                </div>
-                <h4 className="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors">{combo.name}</h4>
-                <p className="mt-1 text-sm text-zinc-400">{combo.description}</p>
-                <p className="mt-4 text-2xl font-bold text-white">${combo.price}<span className="text-sm text-zinc-500">/mo</span></p>
-              </button>
-            ))}
+              { name: 'Email Marketer', features: ['email-marketing'], price: 40, color: 'from-blue-500 to-cyan-500' },
+              { name: 'Social Pro', features: ['social-media', 'email-marketing'], price: 85, color: 'from-pink-500 to-rose-500' },
+              { name: 'Sales Machine', features: ['email-marketing', 'sms-marketing', 'unified-inbox', 'pipeline'], price: 175, color: 'from-green-500 to-emerald-500' },
+              { name: 'AI Powered', features: ['email-marketing', 'sms-marketing', 'workflows', 'rocket-ai'], price: 254, color: 'from-orange-500 to-red-500' },
+            ].map((combo) => {
+              const displayPrice = billingCycle === 'annual' ? Math.round(combo.price * 0.85) : combo.price
+              return (
+                <button
+                  key={combo.name}
+                  onClick={() => setSelectedFeatures(combo.features)}
+                  className="group rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-left hover:border-zinc-700 transition-all"
+                >
+                  <div className={`inline-flex items-center gap-2 rounded-full bg-gradient-to-r ${combo.color} px-3 py-1 mb-4`}>
+                    <Sparkles className="h-3 w-3 text-white" />
+                    <span className="text-xs font-medium text-white">Quick Start</span>
+                  </div>
+                  <h4 className="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors">{combo.name}</h4>
+                  <p className="mt-1 text-sm text-zinc-400">{combo.features.length} feature{combo.features.length > 1 ? 's' : ''} + Base</p>
+                  <p className="mt-4 text-2xl font-bold text-white">${displayPrice}<span className="text-sm text-zinc-500">/mo</span></p>
+                </button>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* OR Choose a Bundle - Secondary */}
+      {/* Bundles - Secondary */}
       <section className="py-24 border-t border-zinc-800 bg-zinc-900/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-zinc-500 text-sm uppercase tracking-wider mb-2">Or skip the customization</p>
+            <p className="text-zinc-500 text-sm uppercase tracking-wider mb-2">Want it all?</p>
             <h2 className="text-3xl font-bold text-white">Pre-Built Bundles</h2>
-            <p className="mt-4 text-zinc-400">
-              Want everything? Grab a bundle and get started instantly.
-            </p>
+            <p className="mt-4 text-zinc-400">Save more when you bundle features together</p>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-3">
-            {bundlePlans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative rounded-2xl border ${
-                  plan.popular ? 'border-2 border-orange-500 bg-zinc-900/80' : 'border-zinc-800 bg-zinc-900/50'
-                } p-8`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <div className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 py-1">
-                      <Star className="h-4 w-4 text-white" />
-                      <span className="text-sm font-medium text-white">Most Popular</span>
-                    </div>
-                  </div>
-                )}
-
-                <h3 className="text-xl font-semibold text-white">{plan.name}</h3>
-                <p className="mt-1 text-sm text-zinc-400">{plan.description}</p>
-
-                <div className="mt-6">
-                  <span className="text-4xl font-bold text-white">
-                    ${billingCycle === 'monthly' ? plan.price : Math.round(plan.annual / 12)}
-                  </span>
-                  <span className="text-zinc-400">/mo</span>
-                  {billingCycle === 'annual' && (
-                    <p className="text-sm text-green-400 mt-1">
-                      Save ${plan.price * 12 - plan.annual}/year
-                    </p>
-                  )}
-                </div>
-
-                {plan.trial > 0 && (
-                  <p className="mt-2 text-sm text-cyan-400">{plan.trial}-day free trial</p>
-                )}
-
-                <a
-                  href={billingCycle === 'annual' ? plan.stripeAnnual : plan.stripeMonthly}
-                  className={`mt-6 block w-full rounded-lg py-3 text-center font-medium transition-all ${
-                    plan.popular
-                      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:opacity-90'
-                      : 'border border-zinc-700 text-white hover:bg-zinc-800'
-                  }`}
+            {bundlePlans.map((plan) => {
+              const displayPrice = billingCycle === 'monthly' ? plan.price : Math.round(plan.annual / 12)
+              return (
+                <div
+                  key={plan.name}
+                  className={`relative rounded-2xl border ${
+                    plan.popular ? 'border-2 border-orange-500 bg-zinc-900/80' : 'border-zinc-800 bg-zinc-900/50'
+                  } p-8`}
                 >
-                  Get {plan.name}
-                </a>
+                  {plan.popular && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                      <div className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 py-1">
+                        <Star className="h-4 w-4 text-white" />
+                        <span className="text-sm font-medium text-white">Best Value</span>
+                      </div>
+                    </div>
+                  )}
 
-                <ul className="mt-6 space-y-2">
-                  {plan.includes.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2 text-sm text-zinc-300">
-                      <Check className="h-4 w-4 flex-shrink-0 text-green-500" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                  <h3 className="text-xl font-semibold text-white">{plan.name}</h3>
+                  <p className="mt-1 text-sm text-zinc-400">{plan.description}</p>
+
+                  <div className="mt-6">
+                    <span className="text-4xl font-bold text-white">${displayPrice}</span>
+                    <span className="text-zinc-400">/mo</span>
+                    {billingCycle === 'annual' && (
+                      <p className="text-sm text-green-400 mt-1">Save ${plan.price * 12 - plan.annual}/year</p>
+                    )}
+                  </div>
+
+                  {plan.trial > 0 && (
+                    <p className="mt-2 text-sm text-cyan-400">{plan.trial}-day free trial</p>
+                  )}
+
+                  <a
+                    href={billingCycle === 'annual' ? plan.stripeAnnual : plan.stripeMonthly}
+                    className={`mt-6 block w-full rounded-lg py-3 text-center font-medium transition-all ${
+                      plan.popular
+                        ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:opacity-90'
+                        : 'border border-zinc-700 text-white hover:bg-zinc-800'
+                    }`}
+                  >
+                    Get {plan.name}
+                  </a>
+
+                  <ul className="mt-6 space-y-2">
+                    {plan.includes.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2 text-sm text-zinc-300">
+                        <Check className="h-4 w-4 flex-shrink-0 text-green-500" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* Rocket+ AI Mods - Value Add */}
+      {/* Rocket+ AI Mods */}
       <section className="py-16 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-orange-500/10 border-y border-orange-500/20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-white">
               <span className="text-orange-500">Rocket+</span> AI Mods
             </h2>
-            <p className="mt-2 text-zinc-400">
-              Add AI superpowers to any plan for just $99/mo
-            </p>
+            <p className="mt-2 text-zinc-400">Add AI superpowers for ${billingCycle === 'annual' ? '84' : '99'}/mo</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -598,16 +593,14 @@ export default function PricingPage() {
       {/* FAQ */}
       <section className="py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-white text-center mb-12">
-            Frequently Asked Questions
-          </h2>
+          <h2 className="text-2xl font-bold text-white text-center mb-12">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {[
-              { q: 'Can I really change my plan anytime?', a: 'Yes! Add or remove features whenever you want. Changes take effect immediately. No contracts, no penalties, complete flexibility.' },
-              { q: 'What if I start small and need to scale?', a: 'Perfect! Start with one feature, add more as you grow. You can go from $25/mo to enterprise-level without switching platforms.' },
-              { q: 'How does the billing work for custom plans?', a: 'Simple: add up your features and that\'s your monthly cost. Annual billing saves you 15%. Promo codes work on everything.' },
-              { q: 'Can I switch from a bundle to custom?', a: 'Absolutely! Switch anytime. We\'ll prorate your billing and you only pay for what you use going forward.' },
-              { q: 'Is there a free trial?', a: 'Starter and Scale bundles include free trials. For custom plans, you can try individual features risk-free with our 14-day money-back guarantee.' },
+              { q: 'What\'s included in the base?', a: 'Every plan includes Contacts & CRM, Media Library, Forms, Tasks, Calendar & Booking, and Reporting - a $155 value at no extra cost.' },
+              { q: 'Can I start with just one feature?', a: 'Absolutely! Start with just Email Marketing for $40/mo or any single feature. Add more whenever you\'re ready.' },
+              { q: 'Can I change my features later?', a: 'Yes! Add or remove features anytime. Changes take effect on your next billing cycle. No penalties, no hassle.' },
+              { q: 'How does annual billing work?', a: 'Choose annual billing to save 15% on all features. You can switch between monthly and annual anytime.' },
+              { q: 'What if I need everything?', a: 'Check out our bundles! The Growth Bundle at $425/mo gives you 10 features and is our most popular option.' },
             ].map((faq, i) => (
               <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
                 <h3 className="font-semibold text-white">{faq.q}</h3>
@@ -621,9 +614,9 @@ export default function PricingPage() {
       {/* Final CTA */}
       <section className="py-16 border-t border-zinc-800">
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <h2 className="text-3xl font-bold text-white">Ready to Build Your Perfect CRM?</h2>
+          <h2 className="text-3xl font-bold text-white">Ready to Build Your CRM?</h2>
           <p className="mt-4 text-lg text-zinc-400">
-            Start with exactly what you need. Scale when you're ready.
+            Start with the base. Add what you need. Scale when you're ready.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -634,7 +627,7 @@ export default function PricingPage() {
               <ArrowRight className="h-5 w-5" />
             </a>
             <a href="https://rocketopp.com" target="_blank" className="inline-flex items-center gap-2 rounded-xl border border-zinc-700 px-8 py-4 font-medium text-white hover:bg-zinc-800 transition-colors">
-              Need Help Deciding?
+              Need Help?
             </a>
           </div>
         </div>
