@@ -56,8 +56,9 @@ const corePlans = [
     trial: 7,
     credits: 15,
     snapshot: 'Client Onboarding',
-    stripeId: 'prod_JdMRcmRGfEylhr',
-    saleLink: '', // Will be filled with actual link
+    stripeId: 'prod_JdMRcmRGfEyihr',
+    saleLinkMonthly: 'https://buy.stripe.com/5kQbJ0djObObb4E6162wU0a',
+    saleLinkAnnual: 'https://buy.stripe.com/5kQbJ0djObObb4E6162wU0a',
     features: [
       'CRM & Contact Management',
       'Email Marketing',
@@ -86,7 +87,8 @@ const corePlans = [
     credits: 50,
     snapshot: null,
     stripeId: 'prod_JdMRXZlBzDFyMQ',
-    saleLink: '', // Will be filled with actual link
+    saleLinkMonthly: 'https://buy.stripe.com/6oU6oG3JecSf5Kk4X22wU0e',
+    saleLinkAnnual: 'https://buy.stripe.com/9B65kCbbG3hF6Oodty2wU0g',
     features: [
       'Everything in Starter',
       'Advanced Automations',
@@ -114,7 +116,8 @@ const corePlans = [
     credits: 100,
     snapshot: 'Starter Snapshot',
     stripeId: 'prod_JdMRbcFNwBalSm',
-    saleLink: '', // Will be filled with actual link
+    saleLinkMonthly: 'https://buy.stripe.com/7sY6oG3Je19x3Cccpu2wU0i',
+    saleLinkAnnual: 'https://buy.stripe.com/3cI5kC0x2f0nfkU2OU2wU0j',
     features: [
       'Everything in Growth',
       'Unlimited Sub-accounts',
@@ -453,7 +456,7 @@ export default function PricingPage() {
                 </div>
 
                 <a
-                  href={plan.saleLink || 'https://app.rocketclients.com'}
+                  href={billingCycle === 'annual' ? plan.saleLinkAnnual : plan.saleLinkMonthly}
                   className={`mt-6 block w-full rounded-lg py-3 text-center font-medium transition-all ${
                     plan.popular
                       ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:opacity-90'
