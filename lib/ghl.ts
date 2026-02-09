@@ -308,6 +308,33 @@ export async function getSnapshotShareLink(
 }
 
 // ============================================================
+// Sub-Account Operations (Agency Level)
+// ============================================================
+
+export async function createSubAccount(account: {
+  name: string
+  email: string
+  phone?: string
+  address?: string
+  city?: string
+  state?: string
+  postalCode?: string
+  website?: string
+  timezone?: string
+  settings?: Record<string, unknown>
+}): Promise<GHLResponse<{ location: Record<string, unknown> }>> {
+  const { agencyId } = getCredentials()
+  return ghlRequest('/locations/', {
+    method: 'POST',
+    useAgencyPit: true,
+    body: {
+      companyId: agencyId,
+      ...account,
+    },
+  })
+}
+
+// ============================================================
 // Lead Capture - Main Function
 // ============================================================
 

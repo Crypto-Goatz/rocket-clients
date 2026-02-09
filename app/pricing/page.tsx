@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useMemo } from 'react'
-import Link from 'next/link'
+import { useState, useMemo, FormEvent } from 'react'
 import {
+  Loader2,
   Check,
   ArrowRight,
   Star,
@@ -63,9 +63,9 @@ const paidFeatures = [
 ]
 
 const bundlePlans = [
-  { name: 'Starter Bundle', description: 'Essential tools to get started', price: 225, annual: 2250, trial: 7, stripeMonthly: 'https://buy.stripe.com/5kQbJ0djObObb4E6162wU0a', stripeAnnual: 'https://buy.stripe.com/5kQbJ0djObObb4E6162wU0a', includes: ['Base Features', 'Funnels', 'Email', 'SMS', 'Inbox', 'Pipeline'], featureCount: 5 },
-  { name: 'Growth Bundle', description: 'Everything you need to scale', price: 425, annual: 4250, trial: 0, stripeMonthly: 'https://buy.stripe.com/6oU6oG3JecSf5Kk4X22wU0e', stripeAnnual: 'https://buy.stripe.com/9B65kCbbG3hF6Oodty2wU0g', includes: ['Everything in Starter', 'Workflows', 'Social Media', 'Reputation', 'Payments', 'Rocket+ AI'], featureCount: 10, popular: true },
-  { name: 'Scale Bundle', description: 'Enterprise-grade for agencies', price: 925, annual: 9250, trial: 14, stripeMonthly: 'https://buy.stripe.com/7sY6oG3Je19x3Cccpu2wU0i', stripeAnnual: 'https://buy.stripe.com/3cI5kC0x2f0nfkU2OU2wU0j', includes: ['All 15 Features', 'White-label Platform', 'Unlimited Sub-accounts', 'API Access', 'Priority Support'], featureCount: 15 },
+  { id: 'starter', name: 'Starter Bundle', description: 'Essential tools to get started', price: 225, annual: 2250, trial: 7, includes: ['Base Features', 'Funnels', 'Email', 'SMS', 'Inbox', 'Pipeline'], featureCount: 5 },
+  { id: 'growth', name: 'Growth Bundle', description: 'Everything you need to scale', price: 425, annual: 4250, trial: 0, includes: ['Everything in Starter', 'Workflows', 'Social Media', 'Reputation', 'Payments', 'Rocket+ AI'], featureCount: 10, popular: true },
+  { id: 'scale', name: 'Scale Bundle', description: 'Enterprise-grade for agencies', price: 925, annual: 9250, trial: 14, includes: ['All 15 Features', 'White-label Platform', 'Unlimited Sub-accounts', 'API Access', 'Priority Support'], featureCount: 15 },
 ]
 
 const categories = ['All', 'Marketing', 'CRM', 'Websites', 'Automation', 'Commerce', 'Content', 'Analytics', 'AI']
@@ -75,6 +75,42 @@ export default function PricingPage() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
   const [promoCode, setPromoCode] = useState('')
+  const [checkoutEmail, setCheckoutEmail] = useState('')
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [checkoutError, setCheckoutError] = useState('')
+  const [showEmailModal, setShowEmailModal] = useState<{ type: 'custom' | 'bundle'; bundleId?: string } | null>(null)
+
+  const handleCheckout = async (opts: { features?: string[]; bundleId?: string }) => {
+    if (!checkoutEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(checkoutEmail)) {
+      setCheckoutError('Please enter a valid email address')
+      return
+    }
+    setCheckoutLoading(true)
+    setCheckoutError('')
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: checkoutEmail,
+          features: opts.features,
+          bundleId: opts.bundleId,
+          billingCycle,
+          promoCode: promoCode || undefined,
+        }),
+      })
+      const data = await res.json()
+      if (data.success && data.checkoutUrl) {
+        window.location.href = data.checkoutUrl
+      } else {
+        setCheckoutError(data.error || 'Something went wrong')
+        setCheckoutLoading(false)
+      }
+    } catch {
+      setCheckoutError('Network error. Please try again.')
+      setCheckoutLoading(false)
+    }
+  }
 
   const toggleFeature = (id: string) => {
     setSelectedFeatures(prev => prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id])
@@ -289,19 +325,28 @@ export default function PricingPage() {
                     </p>
                   )}
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 flex-wrap">
                   <div className="relative">
                     <input type="text" placeholder="Promo code" value={promoCode} onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
-                      className="w-32 px-4 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-cyan-500" />
+                      className="w-28 px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-cyan-500" />
                     {promoCode === 'ROCKET2026' && <Check className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-400" />}
                   </div>
-                  <a
-                    href={`https://app.rocketclients.com/checkout?features=${selectedFeatures.join(',')}&total=${customTotal}&billing=${billingCycle}${promoCode ? `&promo=${promoCode}` : ''}`}
-                    className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold text-lg hover:opacity-90 transition-all hover:shadow-lg hover:shadow-cyan-500/25"
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    value={checkoutEmail}
+                    onChange={(e) => { setCheckoutEmail(e.target.value); setCheckoutError('') }}
+                    className="w-48 px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-cyan-500"
+                  />
+                  <button
+                    onClick={() => handleCheckout({ features: selectedFeatures })}
+                    disabled={checkoutLoading}
+                    className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold text-lg hover:opacity-90 transition-all hover:shadow-lg hover:shadow-cyan-500/25 disabled:opacity-50 flex items-center gap-2"
                   >
-                    Get Started
-                  </a>
+                    {checkoutLoading ? <><Loader2 className="h-5 w-5 animate-spin" /> Processing...</> : 'Get Started'}
+                  </button>
                 </div>
+                {checkoutError && <p className="text-red-400 text-sm mt-2 text-right">{checkoutError}</p>}
               </div>
             </div>
           </div>
@@ -377,12 +422,13 @@ export default function PricingPage() {
                     {billingCycle === 'annual' && <p className="text-sm text-green-400 mt-1">Save ${plan.price * 12 - plan.annual}/year</p>}
                   </div>
                   {plan.trial > 0 && <p className="mt-2 text-sm text-cyan-400">{plan.trial}-day free trial</p>}
-                  <a href={billingCycle === 'annual' ? plan.stripeAnnual : plan.stripeMonthly}
+                  <button
+                    onClick={() => { setShowEmailModal({ type: 'bundle', bundleId: plan.id }); setCheckoutError('') }}
                     className={`mt-6 block w-full rounded-lg py-3 text-center font-medium transition-all ${
                       plan.popular ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:opacity-90' : 'border border-zinc-700 text-white hover:bg-zinc-800'
                     }`}>
                     Get {plan.name}
-                  </a>
+                  </button>
                   <ul className="mt-6 space-y-2">
                     {plan.includes.map((feature) => (
                       <li key={feature} className="flex items-center gap-2 text-sm text-zinc-300">
@@ -478,6 +524,51 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
+
+      {/* Email Modal for Bundle Checkout */}
+      {showEmailModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-8 max-w-md w-full shadow-2xl">
+            <h3 className="text-xl font-bold text-white">Enter Your Email</h3>
+            <p className="mt-2 text-sm text-zinc-400">
+              {showEmailModal.type === 'bundle'
+                ? `Get started with the ${bundlePlans.find(b => b.id === showEmailModal.bundleId)?.name || 'bundle'}`
+                : 'Complete your custom plan checkout'}
+            </p>
+            <form onSubmit={(e: FormEvent) => {
+              e.preventDefault()
+              handleCheckout(
+                showEmailModal.type === 'bundle'
+                  ? { bundleId: showEmailModal.bundleId }
+                  : { features: selectedFeatures }
+              )
+            }}>
+              <input
+                type="email"
+                placeholder="your@email.com"
+                value={checkoutEmail}
+                onChange={(e) => { setCheckoutEmail(e.target.value); setCheckoutError('') }}
+                autoFocus
+                className="mt-4 w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder:text-zinc-500 focus:outline-none focus:border-cyan-500"
+              />
+              {checkoutError && <p className="mt-2 text-sm text-red-400">{checkoutError}</p>}
+              <button
+                type="submit"
+                disabled={checkoutLoading}
+                className="mt-4 w-full py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold hover:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {checkoutLoading ? <><Loader2 className="h-5 w-5 animate-spin" /> Processing...</> : 'Continue to Checkout'}
+              </button>
+            </form>
+            <button
+              onClick={() => { setShowEmailModal(null); setCheckoutError('') }}
+              className="mt-3 w-full py-2 text-sm text-zinc-500 hover:text-white transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
