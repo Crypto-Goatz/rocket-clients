@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0f;
+  --background: #050507;
   --foreground: #ffffff;
 }
 
@@ -55,6 +55,35 @@ body {
   50% { box-shadow: 0 0 40px rgba(249, 115, 22, 0.2); }
 }
 
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+@keyframes colorShift {
+  0% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(30deg); }
+  100% { filter: hue-rotate(0deg); }
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes shootingStar {
+  0% { transform: translateX(-100px) translateY(-100px); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translateX(800px) translateY(400px); opacity: 0; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.1); }
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -94,6 +123,22 @@ body {
   animation: float 4s ease-in-out infinite;
 }
 
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift 20s ease-in-out infinite;
+}
+
+.animate-color-shift {
+  animation: colorShift 8s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
 /* Stagger delay utilities */
 .stagger-1 { animation-delay: 50ms; }
 .stagger-2 { animation-delay: 100ms; }
@@ -106,17 +151,24 @@ body {
 .stagger-9 { animation-delay: 450ms; }
 .stagger-10 { animation-delay: 500ms; }
 
+/* Grid overlay */
+.bg-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
 /* Glass morphism card */
 .glass-card {
-  background: rgba(24, 24, 27, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(24, 24, 27, 0.5);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card-hover:hover {
-  background: rgba(24, 24, 27, 0.8);
+  background: rgba(24, 24, 27, 0.7);
   border-color: rgba(249, 115, 22, 0.3);
-  box-shadow: 0 8px 32px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1), 0 0 60px rgba(249, 115, 22, 0.05);
 }
 
 /* Gradient text helper */

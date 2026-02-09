@@ -3,8 +3,9 @@ import { Rocket, Mail, Globe } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer className="border-t border-zinc-800 bg-zinc-950">
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-16">
+    <footer className="relative border-t border-zinc-800/40 bg-zinc-950/80 before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-orange-500/20 before:to-transparent">
+      <div className="absolute inset-0 bg-grid opacity-50 pointer-events-none" aria-hidden="true" />
+      <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
@@ -57,7 +58,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-zinc-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-zinc-500">
             &copy; {new Date().getFullYear()} Rocket+CRM. A RocketOpp Company.
           </p>

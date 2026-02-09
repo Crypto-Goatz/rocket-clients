@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { NebulaBg } from '@/components/NebulaBg'
 import {
   Users,
   MessageSquare,
@@ -75,10 +76,11 @@ const rocketPlusFeatures = [
 
 export default function FeaturesPage() {
   return (
-    <div className="bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+    <div>
       {/* Header */}
-      <section className="py-16 text-center">
-        <div className="mx-auto max-w-4xl px-4 animate-fade-in-up">
+      <section className="relative py-16 text-center overflow-hidden">
+        <NebulaBg variant="section" />
+        <div className="relative mx-auto max-w-4xl px-4 animate-fade-in-up">
           <h1 className="text-4xl font-bold text-white sm:text-5xl">
             Everything You Need to
             <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent"> Grow</span>
@@ -94,7 +96,7 @@ export default function FeaturesPage() {
             {featureCategories.map((category, i) => (
               <div
                 key={category.title}
-                className={`rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 hover:border-zinc-700 transition-all duration-300 animate-fade-in-up stagger-${Math.min(i + 1, 8)}`}
+                className={`rounded-2xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-8 hover:border-zinc-700/60 hover:bg-zinc-900/50 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300 animate-fade-in-up stagger-${Math.min(i + 1, 8)}`}
               >
                 <div className="flex items-center gap-4 mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500/20 to-red-500/20">
@@ -120,7 +122,7 @@ export default function FeaturesPage() {
       </section>
 
       {/* Additional Features */}
-      <section className="py-24 border-t border-zinc-800">
+      <section className="py-24 border-t border-zinc-800/50">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl font-bold text-white">Plus So Much More</h2>
@@ -136,7 +138,7 @@ export default function FeaturesPage() {
               { icon: Facebook, title: 'Facebook Ads Integration', desc: 'Sync leads and track conversions from Meta ads' },
               { icon: Zap, title: 'Zapier & API', desc: 'Connect to 5000+ apps or build custom integrations' },
             ].map((item, i) => (
-              <div key={item.title} className={`rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 hover:border-zinc-700 transition-colors animate-fade-in-up stagger-${Math.min(i + 1, 8)}`}>
+              <div key={item.title} className={`rounded-xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-6 hover:border-zinc-700/60 hover:bg-zinc-900/50 hover:shadow-lg hover:shadow-orange-500/5 transition-all animate-fade-in-up stagger-${Math.min(i + 1, 8)}`}>
                 <item.icon className="h-8 w-8 text-orange-500 mb-4" />
                 <h3 className="font-semibold text-white">{item.title}</h3>
                 <p className="mt-2 text-sm text-zinc-400">{item.desc}</p>
@@ -147,7 +149,8 @@ export default function FeaturesPage() {
       </section>
 
       {/* Rocket+ Mods Section */}
-      <section className="py-24 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-orange-500/10 border-y border-orange-500/20">
+      <section className="relative py-24 bg-gradient-to-r from-orange-500/5 via-red-500/5 to-orange-500/5 border-y border-orange-500/20 overflow-hidden">
+        <NebulaBg variant="subtle" />
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/50 bg-orange-500/20 px-4 py-2 mb-6">
@@ -166,7 +169,7 @@ export default function FeaturesPage() {
             {rocketPlusFeatures.map((feature, i) => (
               <div
                 key={feature.name}
-                className={`rounded-2xl border border-orange-500/30 bg-zinc-900/80 p-8 hover:border-orange-500/50 transition-all duration-300 animate-fade-in-up stagger-${Math.min(i + 1, 6)}`}
+                className={`rounded-2xl border border-orange-500/30 bg-zinc-900/40 backdrop-blur-sm p-8 hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/10 transition-all duration-300 animate-fade-in-up stagger-${Math.min(i + 1, 6)}`}
               >
                 <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-red-500 mb-6">
                   <feature.icon className="h-7 w-7 text-white" />
@@ -249,7 +252,7 @@ export default function FeaturesPage() {
       </section>
 
       {/* Custom Solutions Banner */}
-      <section className="py-16 border-t border-zinc-800">
+      <section className="py-16 border-t border-zinc-800/50">
         <div className="mx-auto max-w-5xl px-4 animate-fade-in-up">
           <div className="rounded-2xl border border-violet-500/30 bg-gradient-to-br from-violet-500/10 to-purple-500/10 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">

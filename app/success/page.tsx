@@ -12,8 +12,9 @@ import {
 
 export default function SuccessPage() {
   return (
-    <div className="bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
-      <main className="py-20">
+    <div className="relative">
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[500px] h-[400px] rounded-full bg-gradient-to-r from-green-500/10 to-emerald-500/10 blur-[150px] animate-drift pointer-events-none" aria-hidden="true" />
+      <main className="relative py-20">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 mb-8 animate-scale-in">
             <CheckCircle className="h-10 w-10 text-white" />
@@ -28,7 +29,7 @@ export default function SuccessPage() {
             Your payment was successful. We&apos;re setting up your CRM now.
           </p>
 
-          <div className="mt-12 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 text-left animate-fade-in-up stagger-3">
+          <div className="mt-12 rounded-2xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-8 text-left animate-fade-in-up stagger-3">
             <h2 className="text-lg font-semibold text-white mb-6">What happens next:</h2>
             <div className="space-y-6">
               {[
@@ -69,7 +70,7 @@ export default function SuccessPage() {
           <div className="mt-16 grid gap-4 sm:grid-cols-2 animate-fade-in-up stagger-5">
             <a
               href="https://rocketopp.com/docs"
-              className="group rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-left hover:border-orange-500/50 transition-colors"
+              className="group rounded-xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-6 text-left hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/5 transition-all"
             >
               <BookOpen className="h-8 w-8 text-orange-500 mb-4" />
               <h3 className="font-semibold text-white group-hover:text-orange-500 transition-colors">Documentation</h3>
@@ -77,7 +78,7 @@ export default function SuccessPage() {
             </a>
             <a
               href="https://rocketadd.com"
-              className="group rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-left hover:border-orange-500/50 transition-colors"
+              className="group rounded-xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-6 text-left hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/5 transition-all"
             >
               <Rocket className="h-8 w-8 text-orange-500 mb-4" />
               <h3 className="font-semibold text-white group-hover:text-orange-500 transition-colors">Rocket+ AI Mods</h3>

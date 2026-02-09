@@ -10,8 +10,11 @@ function WelcomeContent() {
   const sessionId = searchParams.get('session_id')
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center px-4">
-      <div className="max-w-2xl w-full text-center">
+    <div className="relative min-h-screen flex items-center justify-center px-4">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+        <div className="w-[500px] h-[500px] rounded-full bg-gradient-to-r from-green-500/10 to-cyan-500/10 blur-[150px] animate-drift" />
+      </div>
+      <div className="relative max-w-2xl w-full text-center">
         <div className="flex justify-center mb-8">
           <div className="relative">
             <div className="h-20 w-20 rounded-full bg-green-500/20 flex items-center justify-center">
@@ -97,7 +100,7 @@ function WelcomeContent() {
 export default function WelcomePage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-zinc-400">Loading...</div>
       </div>
     }>

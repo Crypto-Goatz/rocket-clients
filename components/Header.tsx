@@ -73,8 +73,8 @@ export function Header() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-xl">
-      <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 w-full border-b border-zinc-800/40 bg-zinc-950/60 backdrop-blur-xl after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-orange-500/20 after:to-transparent">
+      <div className="relative mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
@@ -93,7 +93,7 @@ export function Header() {
                 <div
                   key={link.href}
                   ref={dropdownRef}
-                  className="relative"
+                  className="static"
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
@@ -111,8 +111,8 @@ export function Header() {
 
                   {/* Mega Dropdown */}
                   {resourcesOpen && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[680px] mega-menu-enter">
-                      <div className="rounded-2xl border border-zinc-800 bg-zinc-950/95 backdrop-blur-xl shadow-2xl shadow-black/40 overflow-hidden">
+                    <div className="absolute top-full left-0 right-0 pt-2 mega-menu-enter">
+                      <div className="rounded-2xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-2xl shadow-2xl shadow-black/50 overflow-hidden">
                         {/* Featured */}
                         <div className="p-4 border-b border-zinc-800/60">
                           <Link

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { StarField } from '@/components/StarField'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -38,8 +39,9 @@ export default function RootLayout({
           {`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-WWE1ZBYL59');`}
         </Script>
       </head>
-      <body className="antialiased bg-[#0a0a0f] text-white">
-        <div className="flex flex-col min-h-screen">
+      <body className="antialiased bg-[#050507] text-white">
+        <StarField />
+        <div className="relative z-10 flex flex-col min-h-screen">
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

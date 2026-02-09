@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo, FormEvent } from 'react'
+import { NebulaBg } from '@/components/NebulaBg'
 import {
   Loader2,
   Check,
@@ -142,10 +143,10 @@ export default function PricingPage() {
   const annualSavings = Math.round(monthlyEquivalent * 12 * 0.15)
 
   return (
-    <div className="bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+    <div>
       {/* HERO */}
       <section className="pt-16 pb-8 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5" />
+        <NebulaBg variant="hero" />
         <div className="mx-auto max-w-5xl px-4 relative">
           <div className="inline-flex items-center gap-2 rounded-full border border-green-500/50 bg-green-500/10 px-6 py-2 mb-8 animate-pulse">
             <Gift className="h-4 w-4 text-green-400" />
@@ -201,7 +202,7 @@ export default function PricingPage() {
       </section>
 
       {/* BASE FEATURES */}
-      <section className="py-12 border-t border-zinc-800">
+      <section className="py-12 border-t border-zinc-800/50">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 rounded-full border border-green-500/50 bg-green-500/10 px-4 py-2 mb-4">
@@ -262,12 +263,12 @@ export default function PricingPage() {
                 <button
                   key={feature.id}
                   onClick={() => toggleFeature(feature.id)}
-                  className={`group relative rounded-xl border p-5 text-left transition-all duration-200 ${
+                  className={`group relative rounded-xl border p-5 text-left backdrop-blur-sm transition-all duration-200 ${
                     isSelected
                       ? feature.highlight
                         ? 'border-orange-500 bg-orange-500/10 shadow-lg shadow-orange-500/10'
                         : 'border-cyan-500 bg-cyan-500/10 shadow-lg shadow-cyan-500/10'
-                      : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-700 hover:bg-zinc-900'
+                      : 'border-zinc-800/50 bg-zinc-900/30 hover:border-zinc-700/60 hover:bg-zinc-900/50 hover:shadow-md hover:shadow-cyan-500/5'
                   }`}
                 >
                   <div className="flex items-start justify-between">
@@ -301,7 +302,7 @@ export default function PricingPage() {
 
           {/* Sticky Total Bar */}
           <div className={`sticky bottom-4 mt-8 transition-all duration-300 ${selectedFeatures.length > 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}>
-            <div className="mx-auto max-w-4xl rounded-2xl border border-cyan-500/50 bg-zinc-900/95 backdrop-blur-xl p-6 shadow-2xl shadow-cyan-500/20">
+            <div className="mx-auto max-w-4xl rounded-2xl border border-cyan-500/50 bg-zinc-900/80 backdrop-blur-2xl p-6 shadow-2xl shadow-cyan-500/20">
               <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
                 <div className="flex-1">
                   <div className="flex items-center gap-4 flex-wrap">
@@ -363,7 +364,7 @@ export default function PricingPage() {
       </section>
 
       {/* Quick Start Combos */}
-      <section className="py-16 border-t border-zinc-800">
+      <section className="py-16 border-t border-zinc-800/50">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-white text-center mb-4">Popular Combinations</h3>
           <p className="text-zinc-400 text-center mb-10">Click to auto-select these features</p>
@@ -377,7 +378,7 @@ export default function PricingPage() {
               const displayPrice = billingCycle === 'annual' ? Math.round(combo.price * 0.85) : combo.price
               return (
                 <button key={combo.name} onClick={() => setSelectedFeatures(combo.features)}
-                  className="group rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-left hover:border-zinc-700 transition-all">
+                  className="group rounded-xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-6 text-left hover:border-zinc-700/60 hover:bg-zinc-900/50 hover:shadow-md transition-all">
                   <div className={`inline-flex items-center gap-2 rounded-full bg-gradient-to-r ${combo.color} px-3 py-1 mb-4`}>
                     <Sparkles className="h-3 w-3 text-white" />
                     <span className="text-xs font-medium text-white">Quick Start</span>
@@ -393,7 +394,7 @@ export default function PricingPage() {
       </section>
 
       {/* Bundles */}
-      <section className="py-24 border-t border-zinc-800 bg-zinc-900/30">
+      <section className="py-24 border-t border-zinc-800/50 bg-zinc-900/10">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="text-zinc-500 text-sm uppercase tracking-wider mb-2">Want it all?</p>
@@ -405,7 +406,7 @@ export default function PricingPage() {
               const displayPrice = billingCycle === 'monthly' ? plan.price : Math.round(plan.annual / 12)
               return (
                 <div key={plan.name}
-                  className={`relative rounded-2xl border ${plan.popular ? 'border-2 border-orange-500 bg-zinc-900/80' : 'border-zinc-800 bg-zinc-900/50'} p-8`}>
+                  className={`relative rounded-2xl border backdrop-blur-sm ${plan.popular ? 'border-2 border-orange-500 bg-zinc-900/40 shadow-lg shadow-orange-500/10' : 'border-zinc-800/50 bg-zinc-900/30 hover:border-zinc-700/60'} p-8`}>
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                       <div className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 py-1">
@@ -445,7 +446,8 @@ export default function PricingPage() {
       </section>
 
       {/* Rocket+ AI Mods */}
-      <section className="py-16 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-orange-500/10 border-y border-orange-500/20">
+      <section className="relative py-16 bg-gradient-to-r from-orange-500/5 via-red-500/5 to-orange-500/5 border-y border-orange-500/20 overflow-hidden">
+        <NebulaBg variant="subtle" />
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-white"><span className="text-orange-500">Rocket+</span> AI Mods</h2>
@@ -462,7 +464,7 @@ export default function PricingPage() {
               { name: 'Auto-SEO', desc: 'SEO optimization tools' },
               { name: 'AI Insights', desc: 'Analytics & predictions' },
             ].map((mod) => (
-              <div key={mod.name} className="rounded-xl border border-orange-500/30 bg-zinc-900/50 p-4">
+              <div key={mod.name} className="rounded-xl border border-orange-500/30 bg-zinc-900/30 backdrop-blur-sm p-4 hover:bg-zinc-900/50 transition-colors">
                 <div className="flex items-center gap-3">
                   <Zap className="h-5 w-5 text-orange-500 shrink-0" />
                   <div>
@@ -500,7 +502,7 @@ export default function PricingPage() {
               { q: 'How does annual billing work?', a: 'Choose annual billing to save 15% on all features. You can switch between monthly and annual anytime.' },
               { q: 'What if I need everything?', a: 'Check out our bundles! The Growth Bundle at $425/mo gives you 10 features and is our most popular option.' },
             ].map((faq, i) => (
-              <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 hover:border-zinc-700 transition-colors">
+              <div key={i} className="rounded-xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-6 hover:border-zinc-700/60 hover:bg-zinc-900/50 transition-all">
                 <h3 className="font-semibold text-white">{faq.q}</h3>
                 <p className="mt-2 text-zinc-400">{faq.a}</p>
               </div>
@@ -510,7 +512,7 @@ export default function PricingPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 border-t border-zinc-800">
+      <section className="py-16 border-t border-zinc-800/50">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-3xl font-bold text-white">Ready to Build Your CRM?</h2>
           <p className="mt-4 text-lg text-zinc-400">Start with the base. Add what you need. Scale when you&apos;re ready.</p>

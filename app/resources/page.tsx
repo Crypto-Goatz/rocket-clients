@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { TOOLS } from '@/lib/tools'
+import { NebulaBg } from '@/components/NebulaBg'
 import {
   ArrowRight,
   Sparkles,
@@ -19,10 +20,10 @@ export default function ResourcesPage() {
   const tools = TOOLS.filter((t) => !t.featured)
 
   return (
-    <div className="bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+    <div>
       {/* Hero */}
       <section className="relative overflow-hidden py-20 lg:py-28">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5" />
+        <NebulaBg variant="section" />
         <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 mb-6 animate-fade-in">
             <Sparkles className="h-4 w-4 text-orange-500" />
@@ -102,7 +103,7 @@ export default function ResourcesPage() {
               <Link
                 key={tool.slug}
                 href={`/resources/${tool.slug}`}
-                className={`group relative rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 hover:border-zinc-600 hover:shadow-lg hover:shadow-orange-500/5 hover:-translate-y-1 transition-all duration-300 animate-fade-in-up stagger-${Math.min(i + 1, 9)}`}
+                className={`group relative rounded-2xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-6 hover:border-zinc-600/60 hover:bg-zinc-900/50 hover:shadow-lg hover:shadow-orange-500/10 hover:-translate-y-1 transition-all duration-300 animate-fade-in-up stagger-${Math.min(i + 1, 9)}`}
               >
                 <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${tool.gradient} mb-5 group-hover:shadow-lg transition-shadow`}>
                   <tool.icon className="h-6 w-6 text-white" />
@@ -130,9 +131,9 @@ export default function ResourcesPage() {
       </section>
 
       {/* SXO Playbook Reminder */}
-      <section className="py-16 border-t border-zinc-800">
+      <section className="py-16 border-t border-zinc-800/50">
         <div className="mx-auto max-w-4xl px-4 text-center animate-fade-in-up">
-          <div className="rounded-3xl bg-gradient-to-r from-orange-500 to-red-500 p-10 lg:p-14">
+          <div className="rounded-3xl bg-gradient-to-r from-orange-500 to-red-500 p-10 lg:p-14 animate-color-shift">
             <Rocket className="h-10 w-10 text-white/80 mx-auto mb-4" />
             <h2 className="text-3xl font-bold text-white">Ready to Master Search in 2026?</h2>
             <p className="mt-4 text-lg text-white/90 max-w-xl mx-auto">

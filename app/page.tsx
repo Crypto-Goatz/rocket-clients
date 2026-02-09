@@ -19,6 +19,7 @@ import {
   Star,
   BookOpen,
 } from 'lucide-react'
+import { NebulaBg } from '@/components/NebulaBg'
 
 const features = [
   { icon: Users, title: 'Contact Management', description: 'Unlimited contacts with smart segmentation, tagging, and automated workflows.' },
@@ -49,10 +50,11 @@ export default function RocketClientsPage() {
   const [email, setEmail] = useState('')
 
   return (
-    <div className="bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+    <div>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10" />
+        <NebulaBg variant="hero" />
+        <div className="absolute inset-0 bg-grid" />
         <div className="relative mx-auto max-w-[1440px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
           <div className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 mb-6 animate-fade-in">
@@ -93,7 +95,7 @@ export default function RocketClientsPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="border-y border-zinc-800 bg-zinc-900/50">
+      <section className="relative border-y border-zinc-800/50 bg-zinc-900/20 backdrop-blur-sm">
         <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {[
@@ -112,7 +114,7 @@ export default function RocketClientsPage() {
       </section>
 
       {/* SXO Playbook Banner */}
-      <section className="py-16 border-b border-zinc-800">
+      <section className="py-16 border-b border-zinc-800/50">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <Link
             href="/resources/sxo-playbook-2026"
@@ -156,7 +158,7 @@ export default function RocketClientsPage() {
             {features.map((feature, i) => (
               <div
                 key={feature.title}
-                className={`group rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300 animate-fade-in-up stagger-${i + 1}`}
+                className={`group rounded-2xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-8 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/10 hover:bg-zinc-900/50 transition-all duration-300 animate-fade-in-up stagger-${i + 1}`}
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500/20 to-red-500/20 group-hover:from-orange-500/30 group-hover:to-red-500/30 transition-colors">
                   <feature.icon className="h-6 w-6 text-orange-500" />
@@ -170,7 +172,7 @@ export default function RocketClientsPage() {
       </section>
 
       {/* Rocket+ Integration Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-orange-500/10 via-red-500/10 to-orange-500/10 py-16 border-y border-orange-500/20">
+      <section className="relative overflow-hidden bg-gradient-to-r from-orange-500/5 via-red-500/5 to-orange-500/5 py-16 border-y border-orange-500/20">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="flex-1 animate-fade-in-up">
@@ -204,8 +206,9 @@ export default function RocketClientsPage() {
                 </a>
               </div>
             </div>
-            <div className="shrink-0 animate-float">
-              <div className="flex h-32 w-32 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 shadow-lg shadow-orange-500/30">
+            <div className="shrink-0 animate-float relative">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 blur-[40px] opacity-40 animate-glow-pulse" />
+              <div className="relative flex h-32 w-32 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 shadow-lg shadow-orange-500/30">
                 <Rocket className="h-16 w-16 text-white" />
               </div>
             </div>
@@ -224,7 +227,7 @@ export default function RocketClientsPage() {
             {integrations.map((integration, i) => (
               <div
                 key={integration.name}
-                className={`flex items-center gap-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 hover:border-zinc-700 transition-colors animate-fade-in-up stagger-${i + 1}`}
+                className={`flex items-center gap-4 rounded-xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-4 hover:border-zinc-700/60 hover:bg-zinc-900/50 transition-all animate-fade-in-up stagger-${i + 1}`}
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800">
                   <Zap className="h-5 w-5 text-zinc-400" />
@@ -240,7 +243,7 @@ export default function RocketClientsPage() {
       </section>
 
       {/* RocketOpp Custom Solutions */}
-      <section className="py-24 bg-zinc-900/50 border-y border-zinc-800">
+      <section className="py-24 bg-zinc-900/20 border-y border-zinc-800/50">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl border border-violet-500/30 bg-gradient-to-br from-violet-500/10 to-purple-500/10 p-8 lg:p-12 animate-fade-in-up">
             <div className="flex flex-col lg:flex-row items-center gap-8">
@@ -310,10 +313,10 @@ export default function RocketClientsPage() {
             ].map((plan, i) => (
               <div
                 key={plan.name}
-                className={`rounded-2xl p-8 transition-all duration-300 animate-fade-in-up stagger-${i + 1} ${
+                className={`rounded-2xl p-8 backdrop-blur-sm transition-all duration-300 animate-fade-in-up stagger-${i + 1} ${
                   plan.featured
-                    ? 'relative border-2 border-orange-500 bg-zinc-900/50 shadow-lg shadow-orange-500/10'
-                    : 'border border-zinc-800 bg-zinc-900/50 hover:border-zinc-700'
+                    ? 'relative border-2 border-orange-500 bg-zinc-900/40 shadow-lg shadow-orange-500/10'
+                    : 'border border-zinc-800/50 bg-zinc-900/30 hover:border-zinc-700/60 hover:bg-zinc-900/50'
                 }`}
               >
                 {plan.featured && (
@@ -363,7 +366,7 @@ export default function RocketClientsPage() {
       {/* CTA Section */}
       <section className="py-24">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl bg-gradient-to-r from-orange-500 to-red-500 p-12 text-center animate-fade-in-up">
+          <div className="rounded-3xl bg-gradient-to-r from-orange-500 to-red-500 p-12 text-center animate-fade-in-up animate-color-shift">
             <h2 className="text-3xl font-bold text-white sm:text-4xl">Ready to Grow Your Business?</h2>
             <p className="mt-4 text-lg text-white/90">Start your 14-day free trial today. No credit card required.</p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
