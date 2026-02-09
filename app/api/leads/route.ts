@@ -8,6 +8,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { captureLeadToGHL, type LeadCaptureData } from '@/lib/ghl'
 
+// Universal inbound webhook — fires on every lead capture
+const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/6MSqx0trfxgLxeHBJE1k/webhook-trigger/888494a8-27e2-4a7d-b3fc-e56243dc86be'
+
 // CORS headers for cross-origin embeds
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -173,12 +176,31 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const contactId = result.data?.contact?.id
+
+    // Fire universal inbound webhook (non-blocking)
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contactId,
+        email: leadData.email,
+        firstName: leadData.firstName,
+        lastName: leadData.lastName,
+        phone: leadData.phone,
+        source: leadData.source,
+        tags: leadData.tags,
+        tool: tags?.find((t: string) => t.startsWith('tool:'))?.replace('tool:', '') || null,
+        timestamp: new Date().toISOString(),
+      }),
+    }).catch((err) => console.error('Webhook fire failed:', err))
+
     // Success response
     return NextResponse.json(
       {
         success: true,
         message: 'Thank you! We\'ll be in touch soon.',
-        contactId: result.data?.contact?.id,
+        contactId,
       },
       { status: 200, headers: corsHeaders }
     )
