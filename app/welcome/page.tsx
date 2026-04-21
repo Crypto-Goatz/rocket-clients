@@ -27,7 +27,7 @@ function WelcomeContent() {
         </div>
 
         <h1 className="text-4xl font-bold text-white sm:text-5xl">
-          Welcome to <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Rocket+CRM</span>
+          Welcome to <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">RocketClients</span>
         </h1>
 
         <p className="mt-4 text-lg text-zinc-400">

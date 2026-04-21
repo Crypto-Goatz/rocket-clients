@@ -1,5 +1,6 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { Rocket, Mail, Globe } from 'lucide-react'
+import { Mail, Globe } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -9,12 +10,15 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-red-500">
-                <Rocket className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-lg font-bold text-white">Rocket<span className="text-orange-500">+</span>CRM</span>
-            </div>
+            <Link href="/" aria-label="RocketClients home" className="inline-block mb-4">
+              <Image
+                src="/brand/wordmark-dark.png"
+                alt="RocketClients"
+                width={220}
+                height={52}
+                className="h-9 w-auto"
+              />
+            </Link>
             <p className="text-sm text-zinc-400 leading-relaxed">
               The all-in-one CRM platform powered by AI. Capture, nurture, and convert leads with intelligent automation.
             </p>
@@ -60,7 +64,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-zinc-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-zinc-500">
-            &copy; {new Date().getFullYear()} Rocket+CRM. A RocketOpp Company.
+            &copy; {new Date().getFullYear()} RocketClients. A RocketOpp Company.
           </p>
           <div className="flex items-center gap-6">
             <a href="#" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">Privacy</a>

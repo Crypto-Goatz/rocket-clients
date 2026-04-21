@@ -231,8 +231,8 @@ export default async function ToolPage({
             </h2>
             <p className="mt-4 text-lg text-white/90 max-w-xl mx-auto">
               {tool.featured
-                ? 'Implement every SXO strategy automatically with Rocket+CRM and AI-powered automation.'
-                : 'Rocket+CRM automates your marketing, SEO, and lead generation. Get AI-powered insights without lifting a finger.'}
+                ? 'Implement every SXO strategy automatically with RocketClients and AI-powered automation.'
+                : 'RocketClients automates your marketing, SEO, and lead generation. Get AI-powered insights without lifting a finger.'}
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a

@@ -230,7 +230,7 @@ export default function FeaturesPage() {
         <div className="mx-auto max-w-4xl px-4 text-center animate-fade-in-up">
           <h2 className="text-3xl font-bold text-white sm:text-4xl">Ready to Transform Your Business?</h2>
           <p className="mt-4 text-lg text-zinc-400">
-            Join thousands of businesses using Rocket+CRM to capture leads, nurture relationships, and grow revenue.
+            Join thousands of businesses using RocketClients to capture leads, nurture relationships, and grow revenue.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a

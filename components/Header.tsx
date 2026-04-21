@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -77,13 +78,15 @@ export function Header() {
       <div className="relative mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-red-500 shadow-lg shadow-orange-500/20">
-              <Rocket className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">
-              Rocket<span className="text-orange-500">+</span>CRM
-            </span>
+          <Link href="/" className="flex items-center shrink-0" aria-label="RocketClients home">
+            <Image
+              src="/brand/wordmark-dark.png"
+              alt="RocketClients"
+              width={220}
+              height={52}
+              priority
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop Nav */}

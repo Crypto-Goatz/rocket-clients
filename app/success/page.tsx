@@ -22,7 +22,7 @@ export default function SuccessPage() {
 
           <h1 className="text-4xl font-bold text-white sm:text-5xl animate-fade-in-up">
             Welcome to
-            <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent"> Rocket+CRM</span>!
+            <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent"> RocketClients</span>!
           </h1>
 
           <p className="mt-6 text-xl text-zinc-400 animate-fade-in-up stagger-2">
@@ -35,7 +35,7 @@ export default function SuccessPage() {
               {[
                 { icon: Clock, title: 'Account Creation (1-2 minutes)', desc: 'Your CRM sub-account is being created automatically with all your selected features.' },
                 { icon: Mail, title: 'Check Your Email', desc: 'You\'ll receive login credentials and a link to access your new CRM at app.rocketclients.com' },
-                { icon: Zap, title: 'Start Using Your CRM', desc: 'Log in, complete the setup wizard, and start growing your business with Rocket+CRM!' },
+                { icon: Zap, title: 'Start Using Your CRM', desc: 'Log in, complete the setup wizard, and start growing your business with RocketClients!' },
               ].map((step) => (
                 <div key={step.title} className="flex items-start gap-4">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-500/20">

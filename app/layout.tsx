@@ -6,21 +6,33 @@ import { StarField } from '@/components/StarField'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Rocket+CRM - All-in-One CRM Platform',
-  description: 'The all-in-one CRM platform your business needs. Capture leads, nurture relationships, book appointments, and grow revenue with AI-powered automation.',
-  keywords: ['CRM', 'marketing automation', 'lead generation', 'Rocket+', 'SXO'],
+  metadataBase: new URL('https://rocketclients.com'),
+  title: 'RocketClients — The all-in-one AI CRM for growing agencies',
+  description: 'Capture leads, nurture relationships, book appointments, and grow revenue with AI-powered automation. Everything your agency needs — one platform.',
+  keywords: ['RocketClients', 'CRM', 'marketing automation', 'lead generation', 'agency CRM', 'AI CRM'],
+  applicationName: 'RocketClients',
+  icons: {
+    icon: [
+      { url: '/brand/icon.png', type: 'image/png' },
+      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-icon.png' }],
+  },
   openGraph: {
-    title: 'Rocket+CRM - All-in-One CRM Platform',
-    description: 'Replace your marketing stack with one powerful platform.',
+    title: 'RocketClients — The all-in-one AI CRM for growing agencies',
+    description: 'Capture, nurture, and close — all on one platform. Built for agencies, powered by AI.',
     url: 'https://rocketclients.com',
-    siteName: 'Rocket+CRM',
+    siteName: 'RocketClients',
     type: 'website',
+    images: [{ url: '/brand/wordmark-dark.png', width: 1200, height: 630, alt: 'RocketClients' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rocket+CRM - All-in-One CRM Platform',
-    description: 'Replace your marketing stack with one powerful platform.',
+    title: 'RocketClients — The all-in-one AI CRM for growing agencies',
+    description: 'Capture, nurture, and close — all on one platform.',
+    images: ['/brand/wordmark-dark.png'],
   },
+  alternates: { canonical: 'https://rocketclients.com' },
 }
 
 export default function RootLayout({
