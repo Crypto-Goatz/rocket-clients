@@ -234,7 +234,7 @@ export default function FeaturesPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://app.rocketclients.com"
+              href="https://command.rocketclients.com/api/marketplace/install-url?redirect=1"
               className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 px-8 py-4 font-semibold text-white hover:opacity-90 hover:shadow-lg hover:shadow-orange-500/20 transition-all"
             >
               Start 14-Day Free Trial

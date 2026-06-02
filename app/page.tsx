@@ -74,7 +74,7 @@ export default function RocketClientsPage() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-4 animate-fade-in-up stagger-3">
               <a
-                href="https://app.rocketclients.com"
+                href="https://command.rocketclients.com/api/marketplace/install-url?redirect=1"
                 className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 text-base font-semibold text-white shadow-lg hover:shadow-orange-500/20 hover:opacity-90 transition-all"
               >
                 Start 14-Day Free Trial
@@ -342,7 +342,7 @@ export default function RocketClientsPage() {
                   ))}
                 </ul>
                 <a
-                  href="https://app.rocketclients.com"
+                  href="https://command.rocketclients.com/api/marketplace/install-url?redirect=1"
                   className={`mt-8 block w-full rounded-lg py-3 text-center font-medium transition-all ${
                     plan.featured
                       ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:opacity-90 hover:shadow-lg hover:shadow-orange-500/20'
@@ -378,7 +378,7 @@ export default function RocketClientsPage() {
                 className="w-full sm:w-80 px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50"
               />
               <a
-                href={`https://app.rocketclients.com?email=${encodeURIComponent(email)}`}
+                href={`https://command.rocketclients.com/api/marketplace/install-url?redirect=1`}
                 className="w-full sm:w-auto px-8 py-3 rounded-lg bg-white text-orange-600 font-semibold hover:bg-zinc-100 transition-colors"
               >
                 Start Free Trial

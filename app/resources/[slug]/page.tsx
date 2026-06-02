@@ -236,7 +236,7 @@ export default async function ToolPage({
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href="https://app.rocketclients.com"
+                href="https://command.rocketclients.com/api/marketplace/install-url?redirect=1"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-orange-600 font-bold text-lg hover:bg-zinc-100 transition-colors"
               >
                 Start Free Trial
