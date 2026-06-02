@@ -31,7 +31,7 @@ export function Footer() {
               <li><Link href="/features" className="text-sm text-zinc-400 hover:text-white transition-colors">Features</Link></li>
               <li><Link href="/pricing" className="text-sm text-zinc-400 hover:text-white transition-colors">Pricing</Link></li>
               <li><Link href="/resources" className="text-sm text-zinc-400 hover:text-white transition-colors">Resources & Tools</Link></li>
-              <li><a href="https://app.rocketclients.com" className="text-sm text-zinc-400 hover:text-white transition-colors">Login</a></li>
+              <li><a href="https://command.rocketclients.com/api/marketplace/install-url?redirect=1" className="text-sm text-zinc-400 hover:text-white transition-colors">Login</a></li>
             </ul>
           </div>
 

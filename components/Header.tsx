@@ -208,13 +208,13 @@ export function Header() {
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="https://app.rocketclients.com"
+              href="https://command.rocketclients.com/api/marketplace/install-url?redirect=1"
               className="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
             >
               Login
             </a>
             <a
-              href="https://app.rocketclients.com"
+              href="https://command.rocketclients.com/api/marketplace/install-url?redirect=1"
               className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-lg hover:shadow-lg hover:shadow-orange-500/20 hover:opacity-90 transition-all"
             >
               Start Free Trial
@@ -277,13 +277,13 @@ export function Header() {
             {/* Mobile CTAs */}
             <div className="pt-4 mt-2 border-t border-zinc-800/60 space-y-2">
               <a
-                href="https://app.rocketclients.com"
+                href="https://command.rocketclients.com/api/marketplace/install-url?redirect=1"
                 className="block w-full px-4 py-3 text-center text-base font-medium text-zinc-400 border border-zinc-800 rounded-xl hover:text-white hover:border-zinc-700 transition-colors"
               >
                 Login
               </a>
               <a
-                href="https://app.rocketclients.com"
+                href="https://command.rocketclients.com/api/marketplace/install-url?redirect=1"
                 className="block w-full px-4 py-3 text-center text-base font-semibold text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-xl hover:opacity-90 transition-opacity"
               >
                 Start Free Trial

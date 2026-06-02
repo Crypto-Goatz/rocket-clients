@@ -34,7 +34,7 @@ export default function SuccessPage() {
             <div className="space-y-6">
               {[
                 { icon: Clock, title: 'Account Creation (1-2 minutes)', desc: 'Your CRM sub-account is being created automatically with all your selected features.' },
-                { icon: Mail, title: 'Check Your Email', desc: 'You\'ll receive login credentials and a link to access your new CRM at app.rocketclients.com' },
+                { icon: Mail, title: 'Confirmation Email', desc: 'You\'ll receive a receipt and welcome guide. Click below to install RocketClients into your CRM sub-account.' },
                 { icon: Zap, title: 'Start Using Your CRM', desc: 'Log in, complete the setup wizard, and start growing your business with RocketClients!' },
               ].map((step) => (
                 <div key={step.title} className="flex items-start gap-4">
