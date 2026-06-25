@@ -1,37 +1,12 @@
 'use client'
 
-import { useState, useMemo, FormEvent } from 'react'
+import { useState, useMemo, useEffect, FormEvent } from 'react'
 import { NebulaBg } from '@/components/NebulaBg'
 import {
-  Loader2,
-  Check,
-  ArrowRight,
-  Star,
-  Sparkles,
-  Zap,
-  Users,
-  MessageSquare,
-  Mail,
-  Calendar,
-  Globe,
-  Phone,
-  Instagram,
-  FileText,
-  Workflow,
-  Bot,
-  CreditCard,
-  Target,
-  BookOpen,
-  RefreshCw,
-  Shuffle,
-  Gift,
-  Tag,
-  ChevronDown,
-  BarChart3,
-  CheckSquare,
-  Image,
-  Package,
-  ShoppingCart,
+  Loader2, Check, ArrowRight, Star, Sparkles, Zap, Users, MessageSquare,
+  Mail, Calendar, Globe, Phone, Instagram, FileText, Workflow, Bot,
+  CreditCard, Target, BookOpen, RefreshCw, Shuffle, Gift, Tag, ChevronDown,
+  BarChart3, CheckSquare, Image, Package, ShoppingCart,
 } from 'lucide-react'
 
 const baseFeatures = [
@@ -42,44 +17,60 @@ const baseFeatures = [
   { name: 'Calendar & Booking', description: 'Online scheduling, appointments, reminders', icon: Calendar, value: 30 },
   { name: 'Reporting & Dashboard', description: 'Analytics, stats, performance tracking', icon: BarChart3, value: 35 },
 ]
-
 const baseValue = baseFeatures.reduce((sum, f) => sum + f.value, 0)
 
-const paidFeatures = [
-  { id: 'funnels', name: 'Funnels & Landing Pages', description: 'Drag-and-drop builder, templates, A/B testing', price: 55, icon: Globe, category: 'Websites' },
-  { id: 'email-marketing', name: 'Email Marketing', description: 'Campaigns, templates, sequences, analytics', price: 40, icon: Mail, category: 'Marketing' },
-  { id: 'sms-marketing', name: 'SMS & Text Marketing', description: 'Two-way texting, bulk SMS, compliance tools', price: 50, icon: Phone, category: 'Marketing' },
-  { id: 'unified-inbox', name: 'Unified Inbox', description: 'All conversations in one place - SMS, email, FB, IG', price: 40, icon: MessageSquare, category: 'CRM' },
-  { id: 'social-media', name: 'Social Media Manager', description: 'Schedule posts, manage accounts, track engagement', price: 45, icon: Instagram, category: 'Marketing' },
-  { id: 'reputation', name: 'Reputation Management', description: 'Review requests, monitoring, Google & Facebook', price: 35, icon: Star, category: 'Marketing' },
-  { id: 'pipeline', name: 'Sales Pipeline', description: 'Visual pipelines, deal tracking, opportunities', price: 45, icon: Target, category: 'CRM' },
-  { id: 'workflows', name: 'Workflow Automation', description: 'Visual builder, triggers, multi-step campaigns', price: 65, icon: Workflow, category: 'Automation' },
-  { id: 'triggers', name: 'Smart Triggers', description: 'Event-based automation, webhooks, integrations', price: 40, icon: Zap, category: 'Automation' },
-  { id: 'payments', name: 'Payments & Invoicing', description: 'Accept payments, subscriptions, payment plans', price: 45, icon: CreditCard, category: 'Commerce' },
-  { id: 'ecommerce', name: 'E-commerce & Products', description: 'Product catalog, order management, cart', price: 50, icon: ShoppingCart, category: 'Commerce' },
-  { id: 'membership', name: 'Membership & Courses', description: 'Course builder, membership areas, drip content', price: 55, icon: BookOpen, category: 'Content' },
-  { id: 'communities', name: 'Communities', description: 'Build community spaces, discussions, engagement', price: 40, icon: Users, category: 'Content' },
-  { id: 'call-tracking', name: 'Call Tracking', description: 'Track calls, recordings, analytics, attribution', price: 45, icon: Phone, category: 'Analytics' },
-  { id: 'rocket-ai', name: 'Rocket+ AI Mods', description: 'Full AI suite: RocketFlow, Content AI, APEX & more', price: 99, icon: Bot, category: 'AI', highlight: true },
-]
+const ICONS: Record<string, typeof Globe> = {
+  'funnels': Globe, 'email-marketing': Mail, 'sms-marketing': Phone,
+  'unified-inbox': MessageSquare, 'social-media': Instagram, 'reputation': Star,
+  'pipeline': Target, 'workflows': Workflow, 'triggers': Zap, 'payments': CreditCard,
+  'ecommerce': ShoppingCart, 'membership': BookOpen, 'communities': Users,
+  'call-tracking': Phone, 'rocket-ai': Bot,
+}
 
-const bundlePlans = [
-  { id: 'starter', name: 'Starter Bundle', description: 'Essential tools to get started', price: 225, annual: 2250, trial: 7, includes: ['Base Features', 'Funnels', 'Email', 'SMS', 'Inbox', 'Pipeline'], featureCount: 5 },
-  { id: 'growth', name: 'Growth Bundle', description: 'Everything you need to scale', price: 425, annual: 4250, trial: 0, includes: ['Everything in Starter', 'Workflows', 'Social Media', 'Reputation', 'Payments', 'Rocket+ AI'], featureCount: 10, popular: true },
-  { id: 'scale', name: 'Scale Bundle', description: 'Enterprise-grade for agencies', price: 925, annual: 9250, trial: 14, includes: ['All 15 Features', 'White-label Platform', 'Unlimited Sub-accounts', 'API Access', 'Priority Support'], featureCount: 15 },
-]
-
-const categories = ['All', 'Marketing', 'CRM', 'Websites', 'Automation', 'Commerce', 'Content', 'Analytics', 'AI']
+interface ApiFeature {
+  feature_key: string
+  name: string
+  description: string
+  category: string
+  price_cents: number
+  stripe_price_id: string
+  is_bundle: boolean
+  included_features: string[]
+  trial_days: number
+  highlight: boolean
+  popular: boolean
+}
 
 export default function PricingPage() {
+  const [paidFeatures, setPaidFeatures] = useState<ApiFeature[]>([])
+  const [bundlePlans, setBundlePlans] = useState<ApiFeature[]>([])
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState('')
+
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([])
   const [activeCategory, setActiveCategory] = useState('All')
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
   const [promoCode, setPromoCode] = useState('')
   const [checkoutEmail, setCheckoutEmail] = useState('')
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [checkoutError, setCheckoutError] = useState('')
   const [showEmailModal, setShowEmailModal] = useState<{ type: 'custom' | 'bundle'; bundleId?: string } | null>(null)
+
+  useEffect(() => {
+    fetch('/api/features')
+      .then(r => r.json())
+      .then(d => {
+        if (d.error) throw new Error(d.error)
+        setPaidFeatures(d.features ?? [])
+        setBundlePlans(d.bundles ?? [])
+      })
+      .catch(e => setLoadError(e?.message || 'Failed to load pricing'))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const categories = useMemo(() => {
+    const cats = new Set(paidFeatures.map(f => f.category))
+    return ['All', ...Array.from(cats)]
+  }, [paidFeatures])
 
   const handleCheckout = async (opts: { features?: string[]; bundleId?: string }) => {
     if (!checkoutEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(checkoutEmail)) {
@@ -96,7 +87,6 @@ export default function PricingPage() {
           email: checkoutEmail,
           features: opts.features,
           bundleId: opts.bundleId,
-          billingCycle,
           promoCode: promoCode || undefined,
         }),
       })
@@ -116,31 +106,38 @@ export default function PricingPage() {
   const toggleFeature = (id: string) => {
     setSelectedFeatures(prev => prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id])
   }
-
-  const selectAll = () => setSelectedFeatures(paidFeatures.map(f => f.id))
+  const selectAll = () => setSelectedFeatures(paidFeatures.map(f => f.feature_key))
   const clearAll = () => setSelectedFeatures([])
 
   const filteredFeatures = useMemo(() => {
     if (activeCategory === 'All') return paidFeatures
     return paidFeatures.filter(f => f.category === activeCategory)
-  }, [activeCategory])
+  }, [activeCategory, paidFeatures])
 
   const customTotal = useMemo(() => {
-    const base = selectedFeatures.reduce((total, id) => {
-      const feature = paidFeatures.find(f => f.id === id)
-      return total + (feature?.price || 0)
+    return selectedFeatures.reduce((total, key) => {
+      const f = paidFeatures.find(p => p.feature_key === key)
+      return total + (f ? f.price_cents / 100 : 0)
     }, 0)
-    return billingCycle === 'annual' ? Math.round(base * 0.85) : base
-  }, [selectedFeatures, billingCycle])
+  }, [selectedFeatures, paidFeatures])
 
-  const monthlyEquivalent = useMemo(() => {
-    return selectedFeatures.reduce((total, id) => {
-      const feature = paidFeatures.find(f => f.id === id)
-      return total + (feature?.price || 0)
-    }, 0)
-  }, [selectedFeatures])
-
-  const annualSavings = Math.round(monthlyEquivalent * 12 * 0.15)
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-cyan-400" />
+      </div>
+    )
+  }
+  if (loadError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-8">
+        <div className="text-center max-w-md">
+          <p className="text-red-400 mb-4">Failed to load pricing: {loadError}</p>
+          <button onClick={() => location.reload()} className="px-6 py-2 rounded-lg bg-cyan-500 text-white">Reload</button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -175,21 +172,6 @@ export default function PricingPage() {
                 <span className="text-sm font-medium text-white">{prop.text}</span>
               </div>
             ))}
-          </div>
-
-          <div className="mt-10 inline-flex items-center gap-4 rounded-full border border-zinc-700 bg-zinc-800/50 p-1">
-            <button
-              onClick={() => setBillingCycle('monthly')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${billingCycle === 'monthly' ? 'bg-cyan-500 text-white' : 'text-zinc-400 hover:text-white'}`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingCycle('annual')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${billingCycle === 'annual' ? 'bg-cyan-500 text-white' : 'text-zinc-400 hover:text-white'}`}
-            >
-              Annual <span className="text-green-400 text-xs ml-1">Save 15%</span>
-            </button>
           </div>
 
           <div className="mt-10">
@@ -256,13 +238,13 @@ export default function PricingPage() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredFeatures.map((feature) => {
-              const isSelected = selectedFeatures.includes(feature.id)
-              const IconComponent = feature.icon
-              const displayPrice = billingCycle === 'annual' ? Math.round(feature.price * 0.85) : feature.price
+              const isSelected = selectedFeatures.includes(feature.feature_key)
+              const IconComponent = ICONS[feature.feature_key] || Sparkles
+              const price = feature.price_cents / 100
               return (
                 <button
-                  key={feature.id}
-                  onClick={() => toggleFeature(feature.id)}
+                  key={feature.feature_key}
+                  onClick={() => toggleFeature(feature.feature_key)}
                   className={`group relative rounded-xl border p-5 text-left backdrop-blur-sm transition-all duration-200 ${
                     isSelected
                       ? feature.highlight
@@ -288,10 +270,9 @@ export default function PricingPage() {
                   <div className="mt-4 flex items-center justify-between">
                     <div>
                       <span className={`text-xl font-bold ${isSelected ? (feature.highlight ? 'text-orange-400' : 'text-cyan-400') : 'text-zinc-300'}`}>
-                        ${displayPrice}
+                        ${price}
                       </span>
                       <span className="text-sm text-zinc-500">/mo</span>
-                      {billingCycle === 'annual' && <span className="ml-2 text-xs text-green-400 line-through">${feature.price}</span>}
                     </div>
                     <span className={`text-xs px-2 py-1 rounded-full ${isSelected ? 'bg-zinc-800 text-zinc-300' : 'bg-zinc-800/50 text-zinc-500'}`}>{feature.category}</span>
                   </div>
@@ -316,12 +297,11 @@ export default function PricingPage() {
                     <div>
                       <span className="text-4xl font-bold text-white">${customTotal}</span>
                       <span className="text-zinc-400">/mo</span>
-                      {billingCycle === 'annual' && <span className="ml-2 text-sm text-green-400 font-medium">Save ${annualSavings}/year</span>}
                     </div>
                   </div>
                   {selectedFeatures.length > 0 && (
                     <p className="mt-2 text-sm text-zinc-500">
-                      {selectedFeatures.slice(0, 3).map(id => paidFeatures.find(f => f.id === id)?.name).join(', ')}
+                      {selectedFeatures.slice(0, 3).map(key => paidFeatures.find(f => f.feature_key === key)?.name).join(', ')}
                       {selectedFeatures.length > 3 && ` +${selectedFeatures.length - 3} more`}
                     </p>
                   )}
@@ -352,11 +332,11 @@ export default function PricingPage() {
             </div>
           </div>
 
-          {selectedFeatures.length === 0 && (
+          {selectedFeatures.length === 0 && paidFeatures.length > 0 && (
             <div className="mt-8 text-center">
               <p className="text-zinc-500">
                 Select features above to build your plan.
-                <span className="text-cyan-400 ml-2">Starting at just ${Math.min(...paidFeatures.map(f => f.price))}/mo!</span>
+                <span className="text-cyan-400 ml-2">Starting at just ${Math.min(...paidFeatures.map(f => f.price_cents / 100))}/mo!</span>
               </p>
             </div>
           )}
@@ -370,12 +350,12 @@ export default function PricingPage() {
           <p className="text-zinc-400 text-center mb-10">Click to auto-select these features</p>
           <div className="grid gap-6 md:grid-cols-4">
             {[
-              { name: 'Email Marketer', features: ['email-marketing'], price: 40, color: 'from-blue-500 to-cyan-500' },
-              { name: 'Social Pro', features: ['social-media', 'email-marketing'], price: 85, color: 'from-pink-500 to-rose-500' },
-              { name: 'Sales Machine', features: ['email-marketing', 'sms-marketing', 'unified-inbox', 'pipeline'], price: 175, color: 'from-green-500 to-emerald-500' },
-              { name: 'AI Powered', features: ['email-marketing', 'sms-marketing', 'workflows', 'rocket-ai'], price: 254, color: 'from-orange-500 to-red-500' },
+              { name: 'Email Marketer', features: ['email-marketing'], color: 'from-blue-500 to-cyan-500' },
+              { name: 'Social Pro', features: ['social-media', 'email-marketing'], color: 'from-pink-500 to-rose-500' },
+              { name: 'Sales Machine', features: ['email-marketing', 'sms-marketing', 'unified-inbox', 'pipeline'], color: 'from-green-500 to-emerald-500' },
+              { name: 'AI Powered', features: ['email-marketing', 'sms-marketing', 'workflows', 'rocket-ai'], color: 'from-orange-500 to-red-500' },
             ].map((combo) => {
-              const displayPrice = billingCycle === 'annual' ? Math.round(combo.price * 0.85) : combo.price
+              const total = combo.features.reduce((sum, k) => sum + (paidFeatures.find(p => p.feature_key === k)?.price_cents ?? 0), 0) / 100
               return (
                 <button key={combo.name} onClick={() => setSelectedFeatures(combo.features)}
                   className="group rounded-xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-6 text-left hover:border-zinc-700/60 hover:bg-zinc-900/50 hover:shadow-md transition-all">
@@ -385,7 +365,7 @@ export default function PricingPage() {
                   </div>
                   <h4 className="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors">{combo.name}</h4>
                   <p className="mt-1 text-sm text-zinc-400">{combo.features.length} feature{combo.features.length > 1 ? 's' : ''} + Base</p>
-                  <p className="mt-4 text-2xl font-bold text-white">${displayPrice}<span className="text-sm text-zinc-500">/mo</span></p>
+                  <p className="mt-4 text-2xl font-bold text-white">${total}<span className="text-sm text-zinc-500">/mo</span></p>
                 </button>
               )
             })}
@@ -403,9 +383,9 @@ export default function PricingPage() {
           </div>
           <div className="grid gap-8 lg:grid-cols-3 max-w-5xl mx-auto">
             {bundlePlans.map((plan) => {
-              const displayPrice = billingCycle === 'monthly' ? plan.price : Math.round(plan.annual / 12)
+              const price = plan.price_cents / 100
               return (
-                <div key={plan.name}
+                <div key={plan.feature_key}
                   className={`relative rounded-2xl border backdrop-blur-sm ${plan.popular ? 'border-2 border-orange-500 bg-zinc-900/40 shadow-lg shadow-orange-500/10' : 'border-zinc-800/50 bg-zinc-900/30 hover:border-zinc-700/60'} p-8`}>
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2">
@@ -418,25 +398,27 @@ export default function PricingPage() {
                   <h3 className="text-xl font-semibold text-white">{plan.name}</h3>
                   <p className="mt-1 text-sm text-zinc-400">{plan.description}</p>
                   <div className="mt-6">
-                    <span className="text-4xl font-bold text-white">${displayPrice}</span>
+                    <span className="text-4xl font-bold text-white">${price}</span>
                     <span className="text-zinc-400">/mo</span>
-                    {billingCycle === 'annual' && <p className="text-sm text-green-400 mt-1">Save ${plan.price * 12 - plan.annual}/year</p>}
                   </div>
-                  {plan.trial > 0 && <p className="mt-2 text-sm text-cyan-400">{plan.trial}-day free trial</p>}
+                  {plan.trial_days > 0 && <p className="mt-2 text-sm text-cyan-400">{plan.trial_days}-day free trial</p>}
                   <button
-                    onClick={() => { setShowEmailModal({ type: 'bundle', bundleId: plan.id }); setCheckoutError('') }}
+                    onClick={() => { setShowEmailModal({ type: 'bundle', bundleId: plan.feature_key }); setCheckoutError('') }}
                     className={`mt-6 block w-full rounded-lg py-3 text-center font-medium transition-all ${
                       plan.popular ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:opacity-90' : 'border border-zinc-700 text-white hover:bg-zinc-800'
                     }`}>
                     Get {plan.name}
                   </button>
                   <ul className="mt-6 space-y-2">
-                    {plan.includes.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2 text-sm text-zinc-300">
-                        <Check className="h-4 w-4 shrink-0 text-green-500" />
-                        {feature}
-                      </li>
-                    ))}
+                    {plan.included_features.map((featureKey) => {
+                      const f = paidFeatures.find(p => p.feature_key === featureKey)
+                      return (
+                        <li key={featureKey} className="flex items-center gap-2 text-sm text-zinc-300">
+                          <Check className="h-4 w-4 shrink-0 text-green-500" />
+                          {f?.name ?? featureKey}
+                        </li>
+                      )
+                    })}
                   </ul>
                 </div>
               )
@@ -451,7 +433,7 @@ export default function PricingPage() {
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-white"><span className="text-orange-500">Rocket+</span> AI Mods</h2>
-            <p className="mt-2 text-zinc-400">Add AI superpowers for ${billingCycle === 'annual' ? '84' : '99'}/mo</p>
+            <p className="mt-2 text-zinc-400">Add AI superpowers for ${(paidFeatures.find(f => f.feature_key === 'rocket-ai')?.price_cents ?? 9900) / 100}/mo</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -499,8 +481,7 @@ export default function PricingPage() {
               { q: 'What\'s included in the base?', a: `Every plan includes Contacts & CRM, Media Library, Forms, Tasks, Calendar & Booking, and Reporting - a $${baseValue} value at no extra cost.` },
               { q: 'Can I start with just one feature?', a: 'Absolutely! Start with just Email Marketing for $40/mo or any single feature. Add more whenever you\'re ready.' },
               { q: 'Can I change my features later?', a: 'Yes! Add or remove features anytime. Changes take effect on your next billing cycle. No penalties, no hassle.' },
-              { q: 'How does annual billing work?', a: 'Choose annual billing to save 15% on all features. You can switch between monthly and annual anytime.' },
-              { q: 'What if I need everything?', a: 'Check out our bundles! The Growth Bundle at $425/mo gives you 10 features and is our most popular option.' },
+              { q: 'What if I need everything?', a: 'Check out our bundles! The Growth Bundle gives you 10 features and is our most popular option.' },
             ].map((faq, i) => (
               <div key={i} className="rounded-xl border border-zinc-800/50 bg-zinc-900/30 backdrop-blur-sm p-6 hover:border-zinc-700/60 hover:bg-zinc-900/50 transition-all">
                 <h3 className="font-semibold text-white">{faq.q}</h3>
@@ -534,7 +515,7 @@ export default function PricingPage() {
             <h3 className="text-xl font-bold text-white">Enter Your Email</h3>
             <p className="mt-2 text-sm text-zinc-400">
               {showEmailModal.type === 'bundle'
-                ? `Get started with the ${bundlePlans.find(b => b.id === showEmailModal.bundleId)?.name || 'bundle'}`
+                ? `Get started with the ${bundlePlans.find(b => b.feature_key === showEmailModal.bundleId)?.name || 'bundle'}`
                 : 'Complete your custom plan checkout'}
             </p>
             <form onSubmit={(e: FormEvent) => {
