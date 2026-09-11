@@ -27,7 +27,10 @@ export async function cro9Meta(path: string): Promise<Cro9Meta> {
         signal: AbortSignal.timeout(2500),
       })
       if (!res.ok) continue
-      const meta = (await res.json()) as { title?: unknown; description?: unknown }
+      // The endpoint answers { meta: { title?, description? }, note? } and ALWAYS 200,
+      // an unknown key or no override being an empty `meta`. Measured 2026-09-11.
+      const body = (await res.json()) as { meta?: { title?: unknown; description?: unknown } }
+      const meta = body?.meta
       if (!meta || typeof meta !== 'object') continue
       const out: Cro9Meta = {}
       if (typeof meta.title === 'string' && meta.title.trim()) out.title = meta.title.trim()
@@ -42,9 +45,14 @@ export async function cro9Meta(path: string): Promise<Cro9Meta> {
 
 /** Base metadata, with CRO9's opinion (if any) laid over title and description. */
 export async function withCro9Meta(path: string, base: Metadata): Promise<Metadata> {
+  // `<meta name="cro9-meta" content="installed">` on every page, override or not:
+  // CRO9's publish verifier reads it to tell "helper installed, page stale" from
+  // "helper missing", which are different repairs.
+  const other = (base.other ?? {}) as Record<string, string | number | (string | number)[]>
+  const marked: Metadata = { ...base, other: { ...other, 'cro9-meta': 'installed' } }
   const o = await cro9Meta(path)
-  if (!o.title && !o.description) return base
-  const out: Metadata = { ...base }
+  if (!o.title && !o.description) return marked
+  const out: Metadata = { ...marked }
   if (o.title) {
     const t = base.title
     // DefaultTemplateString needs a string template; a null template means "no template", so the plain string wins
