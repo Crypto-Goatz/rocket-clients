@@ -9,10 +9,15 @@ import {
   Rocket,
 } from 'lucide-react'
 
-export const metadata: Metadata = {
+import { withCro9Meta } from '@/lib/cro9-meta'
+const metadataBase: Metadata = {
   title: 'Free SEO & SXO Tools | Resources | RocketClients',
   description: 'Free SEO tools, SXO resources, and marketing guides to grow your business. Content audit, keyword research, schema generator, and the SXO Playbook for 2026.',
   keywords: ['SEO tools', 'SXO resources', 'free marketing tools', 'content audit', 'keyword research'],
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return withCro9Meta('/resources', metadataBase)
 }
 
 export default function ResourcesPage() {
