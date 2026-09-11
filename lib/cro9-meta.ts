@@ -15,7 +15,7 @@ import type { Metadata } from 'next'
 
 const CRO9_BASE = 'https://www.cro9.com'
 // Public tracking key(s) for this site, same class as a GA measurement id.
-const CRO9_KEYS = ['cro9_a1c64acd2d2e2c087907c5d7be38b971 cro9_446948e4ae62d651eb16c2f2f915c14fe1984ef9bfe288b4']
+const CRO9_KEYS = ['cro9_a1c64acd2d2e2c087907c5d7be38b971', 'cro9_446948e4ae62d651eb16c2f2f915c14fe1984ef9bfe288b4']
 
 export type Cro9Meta = { title?: string; description?: string }
 

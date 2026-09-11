@@ -1,3 +1,5 @@
+import { withCro9Meta } from '@/lib/cro9-meta'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
   CheckCircle,
@@ -94,4 +96,8 @@ export default function SuccessPage() {
       </main>
     </div>
   )
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return withCro9Meta('/success', {})
 }
