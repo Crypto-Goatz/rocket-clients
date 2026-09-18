@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import Cro9Tracker from '@/components/Cro9Tracker'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { StarField } from '@/components/StarField'
@@ -58,6 +59,10 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
         </div>
+        {/* 180crm.com only — see components/Cro9Tracker.tsx for why it is
+            host-gated rather than dropped in <head>: this project also serves
+            rocketclients.com, and the CRO9 api key is per-site. */}
+        <Cro9Tracker />
       </body>
     </html>
   )
